@@ -236,67 +236,65 @@ function setupGame() {
 }
 
 // Check unlock progress
+// Function is intentionally kept outside DOMContentLoaded for global access (as needed by makeWish)
+
+// Check unlock progress - Replaces the original function in script.js
 function checkUnlockProgress() {
     const unlockMessage = document.getElementById('unlock-message');
     const reasonsSection = document.getElementById('reasons-section');
     const memoriesSection = document.getElementById('memories-section');
     const futureSection = document.getElementById('future-section');
     const songsGrid = document.getElementById('songs-grid');
+    const songCards = songsGrid.querySelectorAll('.song-card.locked');
     
-    // Unlock sections based on love meter progress
-    if (loveMeter >= 20 && unlockedSections < 1) {
-        // Unlock Reasons section
+    // Level 1: Unlock Reasons
+    if (loveMeter >= 20 && !reasonsSection.classList.contains('unlocked')) {
         reasonsSection.classList.remove('locked');
         reasonsSection.classList.add('unlocked');
-        unlockMessage.textContent = "🎉 You've unlocked: 12 Reasons Why I Love You!";
-        unlockedSections++;
+        unlockMessage.textContent = "🎉 Level 1 Unlocked: 12 Reasons Why I Love You!";
         createCelebrationEffect();
     }
     
-    if (loveMeter >= 40 && unlockedSections < 2) {
-        // Unlock 3 more songs
-        const songCards = songsGrid.querySelectorAll('.song-card.locked');
-        for (let i = 0; i < Math.min(3, songCards.length); i++) {
-            songCards[i].classList.remove('locked');
+    // Level 2: Unlock 3 More Songs
+    if (loveMeter >= 40 && songCards.length > 9) {
+        for (let i = 0; i < 3; i++) {
+            if (songCards[i]) songCards[i].classList.remove('locked');
         }
-        unlockMessage.textContent = "🎵 You've unlocked 3 more songs for you!";
-        unlockedSections++;
+        unlockMessage.textContent = "🎵 Level 2 Unlocked: 3 More Songs for you!";
         createCelebrationEffect();
     }
     
-    if (loveMeter >= 60 && unlockedSections < 3) {
-        // Unlock Memories section
+    // Level 3: Unlock Memories
+    if (loveMeter >= 60 && !memoriesSection.classList.contains('unlocked')) {
         memoriesSection.classList.remove('locked');
         memoriesSection.classList.add('unlocked');
-        unlockMessage.textContent = "📸 You've unlocked: 12 Precious Memories!";
-        unlockedSections++;
+        memoriesSection.querySelectorAll('.gallery-item.locked').forEach(item => item.classList.remove('locked'));
+        unlockMessage.textContent = "📸 Level 3 Unlocked: 12 Precious Memories!";
         createCelebrationEffect();
     }
     
-    if (loveMeter >= 80 && unlockedSections < 4) {
-        // Unlock 6 more songs
-        const songCards = songsGrid.querySelectorAll('.song-card.locked');
-        for (let i = 0; i < Math.min(6, songCards.length); i++) {
-            songCards[i].classList.remove('locked');
+    // Level 4: Unlock 6 More Songs
+    if (loveMeter >= 80 && songCards.length > 3) {
+        for (let i = 0; i < 6; i++) {
+            if (songCards[i]) songCards[i].classList.remove('locked');
         }
-        unlockMessage.textContent = "🎶 You've unlocked 6 more songs for you!";
-        unlockedSections++;
+        unlockMessage.textContent = "🎶 Level 4 Unlocked: 6 More Songs for you!";
         createCelebrationEffect();
     }
     
-    if (loveMeter >= 100 && unlockedSections < 5) {
-        // Unlock Future section and all remaining songs
+    // Level 5: Final Unlock (Future Glimpses and all remaining songs)
+    if (loveMeter >= 100 && !futureSection.classList.contains('unlocked')) {
         futureSection.classList.remove('locked');
         futureSection.classList.add('unlocked');
-        
+        futureSection.querySelectorAll('.gallery-item.locked').forEach(item => item.classList.remove('locked'));
+
         // Unlock all remaining songs
-        const songCards = songsGrid.querySelectorAll('.song-card.locked');
-        songCards.forEach(card => {
+        songsGrid.querySelectorAll('.song-card.locked').forEach(card => {
             card.classList.remove('locked');
         });
         
-        unlockMessage.textContent = "🎊 You've unlocked everything! Happy Birthday, my love!";
-        unlockedSections++;
+        unlockMessage.textContent = "🎊 FINAL LEVEL! You've unlocked everything! Happy Birthday, my love!";
+        unlockedSections = 5; // Force completion
         createCelebrationEffect();
         
         // Show final celebration
@@ -305,8 +303,6 @@ function checkUnlockProgress() {
         }, 1000);
     }
 }
-
-// Setup Animations
 function setupAnimations() {
     // Create heart tunnel
     createHeartTunnel();
