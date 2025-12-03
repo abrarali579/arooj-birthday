@@ -2,16 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Happy Birthday Arooj - My Queen</title>
-    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAjklEQVRIie2UsQ2AIAxFu9Y20jE2kQ3k/E0zM4FhR7G1V2A6+L6jV+t3gRj1A6iB2wARx8/gBfB9f69V64YQyE6B9A7OAW4bY49x43mGjAAmgLdwARo8jY/A52YJ1jF8d/429lVn6n6n6xN29/95zG2YyJ/3V7zABmABhA3mAP7+gV48q+l6t71wB24k07A+7y2QAAAABJRU5ErkJggg==">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Arooj</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="animations-container" id="animations-container"></div>
@@ -39,7 +36,7 @@
         
         <section class="game-section" id="game-section">
             <h2 class="game-title">Unlock Your Birthday Gifts</h2>
-            <p class="game-instructions">Tap the heart below **quickly** to fill the love meter and unlock all your birthday surprises!</p>
+            <p class="game-instructions">Tap the heart below to fill the love meter and unlock all your birthday surprises!</p>
             
             <div class="love-meter-container">
                 <div class="love-meter-label">Love Meter</div>
@@ -68,27 +65,31 @@
                     </div>
                 </div>
             </div>
-            <div class="gift-message" id="gift-message">Click or Tap the gift box to open your surprise!</div>
+            <div class="gift-message" id="gift-message">Click the gift box to open your surprise!</div>
         </section>
         
         <section class="content-section locked" id="reasons-section">
             <h2 class="section-title">12 Reasons Why I Love You</h2>
-            <div class="reasons-grid" id="reasons-grid"></div>
+            <div class="reasons-grid" id="reasons-grid">
+                </div>
         </section>
         
         <section class="content-section" id="songs-section">
             <h2 class="section-title">12 Songs For You</h2>
-            <div class="songs-grid" id="songs-grid"></div>
+            <div class="songs-grid" id="songs-grid">
+                </div>
         </section>
         
         <section class="content-section locked" id="memories-section">
             <h2 class="section-title">12 Precious Memories</h2>
-            <div class="gallery-grid" id="memories-grid"></div>
+            <div class="gallery-grid" id="memories-grid">
+                </div>
         </section>
         
         <section class="content-section locked" id="future-section">
             <h2 class="section-title">Our Beautiful Future</h2>
-            <div class="gallery-grid" id="future-grid"></div>
+            <div class="gallery-grid" id="future-grid">
+                </div>
         </section>
         
         <section class="content-section">
@@ -102,7 +103,7 @@
                 </div>
             </div>
             <div class="wish-section">
-                <button class="wish-btn" id="wish-btn">
+                <button class="wish-btn" id="wish-btn" onclick="makeWish()">
                     <i class="fas fa-birthday-cake"></i> Blow Out Candle & Make a Wish!
                 </button>
                 <div class="wish-message" id="wish-message">Click the button to make your birthday wish!</div>
@@ -110,9 +111,9 @@
         </section>
         
         <section class="voice-note-section">
-            <a class="voice-btn" id="voice-btn" href="path/to/your/birthday_message.mp3" target="_blank" aria-label="Play Birthday Message">
+            <button class="voice-btn" id="voice-btn">
                 <i class="fas fa-play-circle"></i> Play Birthday Message
-            </a>
+            </button>
             <div class="voice-message" id="voice-message">Click to hear my special birthday message for you!</div>
         </section>
         
@@ -123,6 +124,6 @@
         </footer>
     </div>
 
-    <script src="script.js" defer></script>
+    <script src="script.js"></script>
 </body>
 </html>
