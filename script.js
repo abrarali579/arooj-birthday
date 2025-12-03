@@ -1,4 +1,4 @@
-// --- DATA ---
+// Data for the website
 const reasons = [
     { title: "Your Beautiful Smile", text: "The way your smile lights up any room and warms my heart instantly." },
     { title: "Your Kind Soul", text: "Your incredible kindness and compassion for everyone around you." },
@@ -98,107 +98,72 @@ Happy birthday, my love. May this year bring you all the happiness you deserve a
 Forever yours,
 Abrar`;
 
-// In script.js
-
-function setupVoiceButton() {
-    const voiceBtn = document.getElementById('voice-btn');
-    const voiceMessage = document.getElementById('voice-message');
-    let nameIndex = 0;
-    
-    // Use 'click' here because the anchor tag must complete its default action (navigation)
-    voiceBtn.addEventListener('click', function() {
-        // This logic handles the changing message text for fun.
-        const name = loveNames[nameIndex];
-        voiceMessage.textContent = `Message played for ${name}! (Check the new tab/download)`;
-        
-        nameIndex = (nameIndex + 1) % loveNames.length;
-        
-        createCelebrationEffect();
-    });
-    
-    // CRITICAL: Block all default touch actions on the anchor tag to prevent scroll interference.
-    voiceBtn.addEventListener('touchstart', (e) => {
-        e.stopPropagation(); // Stop the event from bubbling up the DOM
-    });
-}
-// ...
-    // Use touchstart for mobile speed
-    tapArea.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // MANDATORY: BLOCK BROWSER DEFAULT ACTIONS
-        handleTap(e);
-    });
-// ...
-// --- GAME STATE ---
+// Game State
 let loveMeter = 0;
 let unlockedSections = 0;
 let tapCount = 0;
-let wishIndex = 0;
 const maxLoveMeter = 100;
 const tapsToUnlock = 50; // Taps needed to unlock all content
+let wishIndex = 0; // Index for birthday messages
 
-// --- INITIALIZATION ---
+// Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
-    populateSections();
-    startTypewriterEffect();
-    setupGame();
-    setupGiftBox();
-    setupWishButton();
-    setupVoiceButton();
-    setupAnimations();
-    setupSparkleTrail();
-});
-
-// --- CORE LOGIC FUNCTIONS ---
-function populateSections() {
+    // Populate 12 Reasons (initially locked)
     const reasonsGrid = document.getElementById('reasons-grid');
     reasons.forEach((reason, index) => {
-        reasonsGrid.innerHTML += `
-            <div class="reason-card">
-                <div class="reason-number">${index + 1}</div>
-                <div class="reason-content">
-                    <h4>${reason.title}</h4>
-                    <p>${reason.text}</p>
-                </div>
+        const card = document.createElement('div');
+        card.className = 'reason-card';
+        card.innerHTML = `
+            <div class="reason-number">${index + 1}</div>
+            <div class="reason-content">
+                <h4>${reason.title}</h4>
+                <p>${reason.text}</p>
             </div>
         `;
+        reasonsGrid.appendChild(card);
     });
     
+    // Populate 12 Songs (only first one initially available)
     const songsGrid = document.getElementById('songs-grid');
     songs.forEach((song, index) => {
-        const lockedClass = index > 0 ? 'locked' : '';
-        songsGrid.innerHTML += `
-            <div class="song-card ${lockedClass}">
-                <div class="song-icon">${song.icon}</div>
-                <h4>${song.title}</h4>
-                <p>${song.desc}</p>
-            </div>
+        const card = document.createElement('div');
+        card.className = 'song-card';
+        if (index > 0) {
+            card.classList.add('locked');
+        }
+        card.innerHTML = `
+            <div class="song-icon">${song.icon}</div>
+            <h4>${song.title}</h4>
+            <p>${song.desc}</p>
         `;
+        songsGrid.appendChild(card);
     });
     
+    // Populate 12 Memories (initially locked)
     const memoriesGrid = document.getElementById('memories-grid');
-    memories.forEach(memory => {
-        memoriesGrid.innerHTML += `
-            <div class="gallery-item locked">
-                <img src="${memory.img}" alt="${memory.caption}">
-                <div class="gallery-caption">${memory.caption}</div>
-            </div>
+    memories.forEach((memory, index) => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item locked';
+        item.innerHTML = `
+            <img src="${memory.img}" alt="${memory.caption}">
+            <div class="gallery-caption">${memory.caption}</div>
         `;
+        memoriesGrid.appendChild(item);
     });
     
+    // Populate 12 Future Glimpses (initially locked)
     const futureGrid = document.getElementById('future-grid');
-    futureGlimpses.forEach(glimpse => {
-        futureGrid.innerHTML += `
-            <div class="gallery-item locked">
-                <img src="${glimpse.img}" alt="${glimpse.caption}">
-                <div class="gallery-caption">${glimpse.caption}</div>
-            </div>
+    futureGlimpses.forEach((glimpse, index) => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item locked';
+        item.innerHTML = `
+            <img src="${glimpse.img}" alt="${glimpse.caption}">
+            <div class="gallery-caption">${glimpse.caption}</div>
         `;
+        futureGrid.appendChild(item);
     });
-
-    document.getElementById('wish-message').textContent = "Make your first birthday wish!";
-}
-
-function startTypewriterEffect() {
+    
+    // Typewriter effect
     const typewriterElement = document.getElementById('typewriter-text');
     let charIndex = 0;
     
@@ -207,189 +172,158 @@ function startTypewriterEffect() {
             typewriterElement.textContent += typewriterText.charAt(charIndex);
             charIndex++;
             setTimeout(typeWriter, 30);
-        } else {
-            // Stop the cursor blink after typing is complete
-            typewriterElement.style.borderRight = 'none';
         }
     }
     
+    // Start typewriter effect after a short delay
     setTimeout(typeWriter, 1000);
-}
+    
+    // Setup game interactions
+    setupGame();
+    
+    // Setup animations
+    setupAnimations();
+    
+    // Setup gift box
+    setupGiftBox();
+    
+    // Setup voice button
+    setupVoiceButton();
+    
+    // Setup wish button (initial message)
+    document.getElementById('wish-message').textContent = "Make your first birthday wish!";
+    
+    // Setup sparkle trail
+    setupSparkleTrail();
+});
 
-// --- CORE MOBILE GAME LOGIC ---
+// Setup Game
 function setupGame() {
     const tapArea = document.getElementById('tap-area');
     const loveMeterFill = document.getElementById('love-meter-fill');
     const loveMeterText = document.getElementById('love-meter-text');
-
-    let isTapping = false;
-
-    const handleTap = (e) => {
-        if (isTapping) return;
-        isTapping = true;
-        
-        // Visual feedback
-        tapArea.style.transform = 'scale(0.95)';
-
+    
+    tapArea.addEventListener('click', function(event) {
         tapCount++;
         loveMeter = Math.min(maxLoveMeter, tapCount * (maxLoveMeter / tapsToUnlock));
         loveMeterFill.style.width = `${loveMeter}%`;
-
-        const progress = Math.round(loveMeter);
-        loveMeterText.textContent = `Love is ${progress}% complete. Keep Tapping!`;
         
-        const eventData = e.touches && e.touches.length > 0 ? e.touches[0] : e;
-        createTapEffect(eventData);
+        // Update love meter text
+        if (loveMeter < 25) {
+            loveMeterText.textContent = `Love is growing... ${Math.round(loveMeter)}%`;
+        } else if (loveMeter < 50) {
+            loveMeterText.textContent = `Love is getting stronger! ${Math.round(loveMeter)}%`;
+        } else if (loveMeter < 75) {
+            loveMeterText.textContent = `Love is overflowing! ${Math.round(loveMeter)}%`;
+        } else if (loveMeter < 100) {
+            loveMeterText.textContent = `Almost there! ${Math.round(loveMeter)}%`;
+        } else {
+            loveMeterText.textContent = `Love is complete! 100%`;
+        }
         
+        // Create tap effect
+        createTapEffect(event);
+        
+        // Check if we can unlock sections
         checkUnlockProgress();
-
-        setTimeout(() => {
-            isTapping = false;
-        }, 50); 
-    };
-
-    const resetTapVisual = () => {
-        tapArea.style.transform = 'scale(1)';
-    };
-
-    // Use touchstart for mobile speed
-    tapArea.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        handleTap(e);
     });
-
-    tapArea.addEventListener('touchend', resetTapVisual);
-    tapArea.addEventListener('touchcancel', resetTapVisual);
-
-    // Click for desktop fallback
-    tapArea.addEventListener('click', handleTap);
+    
+    // Also allow tapping anywhere on the tap area (not just the text)
+    tapArea.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        tapArea.click();
+    });
 }
 
+// Check unlock progress
 function checkUnlockProgress() {
     const unlockMessage = document.getElementById('unlock-message');
-    const sections = [
-        { progress: 20, id: 'reasons-section', message: "🎉 You've unlocked: 12 Reasons Why I Love You!" },
-        { progress: 40, unlockSongs: 3, message: "🎵 You've unlocked 3 more songs for you!" },
-        { progress: 60, id: 'memories-section', message: "📸 You've unlocked: 12 Precious Memories!" },
-        { progress: 80, unlockSongs: 6, message: "🎶 You've unlocked 6 more songs for you!" },
-    ];
-    
+    const reasonsSection = document.getElementById('reasons-section');
+    const memoriesSection = document.getElementById('memories-section');
+    const futureSection = document.getElementById('future-section');
     const songsGrid = document.getElementById('songs-grid');
-    const unlockSection = (id) => {
-        const section = document.getElementById(id);
-        if (section) {
-            section.classList.remove('locked');
-            section.classList.add('unlocked');
-            section.querySelectorAll('.gallery-item, .reason-card').forEach(el => el.classList.remove('locked'));
+    
+    // Unlock sections based on love meter progress
+    if (loveMeter >= 20 && unlockedSections < 1) {
+        // Unlock Reasons section
+        reasonsSection.classList.remove('locked');
+        reasonsSection.classList.add('unlocked');
+        unlockMessage.textContent = "🎉 You've unlocked: 12 Reasons Why I Love You!";
+        unlockedSections++;
+        createCelebrationEffect();
+    }
+    
+    if (loveMeter >= 40 && unlockedSections < 2) {
+        // Unlock 3 more songs
+        const songCards = songsGrid.querySelectorAll('.song-card.locked');
+        for (let i = 0; i < Math.min(3, songCards.length); i++) {
+            songCards[i].classList.remove('locked');
         }
-    };
-
-    sections.forEach((s, index) => {
-        if (loveMeter >= s.progress && unlockedSections < index + 1) {
-            if (s.id) {
-                unlockSection(s.id);
-            }
-            if (s.unlockSongs) {
-                const songCards = songsGrid.querySelectorAll('.song-card.locked');
-                for (let i = 0; i < Math.min(s.unlockSongs, songCards.length); i++) {
-                    songCards[i].classList.remove('locked');
-                }
-            }
-            unlockMessage.textContent = s.message;
-            unlockedSections = index + 1;
-            createCelebrationEffect();
+        unlockMessage.textContent = "🎵 You've unlocked 3 more songs for you!";
+        unlockedSections++;
+        createCelebrationEffect();
+    }
+    
+    if (loveMeter >= 60 && unlockedSections < 3) {
+        // Unlock Memories section
+        memoriesSection.classList.remove('locked');
+        memoriesSection.classList.add('unlocked');
+        unlockMessage.textContent = "📸 You've unlocked: 12 Precious Memories!";
+        unlockedSections++;
+        createCelebrationEffect();
+    }
+    
+    if (loveMeter >= 80 && unlockedSections < 4) {
+        // Unlock 6 more songs
+        const songCards = songsGrid.querySelectorAll('.song-card.locked');
+        for (let i = 0; i < Math.min(6, songCards.length); i++) {
+            songCards[i].classList.remove('locked');
         }
-    });
-
-    // Final Unlock
-    if (loveMeter >= 100 && unlockedSections < sections.length + 1) {
-        unlockSection('future-section');
-        songsGrid.querySelectorAll('.song-card.locked').forEach(card => card.classList.remove('locked'));
+        unlockMessage.textContent = "🎶 You've unlocked 6 more songs for you!";
+        unlockedSections++;
+        createCelebrationEffect();
+    }
+    
+    if (loveMeter >= 100 && unlockedSections < 5) {
+        // Unlock Future section and all remaining songs
+        futureSection.classList.remove('locked');
+        futureSection.classList.add('unlocked');
+        
+        // Unlock all remaining songs
+        const songCards = songsGrid.querySelectorAll('.song-card.locked');
+        songCards.forEach(card => {
+            card.classList.remove('locked');
+        });
         
         unlockMessage.textContent = "🎊 You've unlocked everything! Happy Birthday, my love!";
-        unlockedSections = sections.length + 1;
+        unlockedSections++;
         createCelebrationEffect();
         
-        setTimeout(showFinalCelebration, 1000);
-    }
-}
-
-// --- GIFTS & WISHES ---
-function setupGiftBox() {
-    const giftBox = document.getElementById('gift-box');
-    const giftMessage = document.getElementById('gift-message');
-    
-    const openGift = () => {
-        if (!giftBox.classList.contains('open')) {
-            giftBox.classList.add('open');
-            giftMessage.textContent = "🎁 You've opened a special birthday surprise! (It's my heart, always yours).";
-            createCelebrationEffect();
-            giftBox.removeEventListener('click', openGift); 
-        }
-    };
-    
-    giftBox.addEventListener('click', openGift);
-    giftBox.addEventListener('touchstart', (e) => { e.preventDefault(); openGift(); });
-}
-
-function setupWishButton() {
-    const wishBtn = document.getElementById('wish-btn');
-    wishBtn.addEventListener('click', makeWish);
-    wishBtn.addEventListener('touchstart', (e) => { e.preventDefault(); makeWish(); });
-}
-
-function makeWish() {
-    const wishMessageEl = document.getElementById('wish-message');
-    const cakeFlame = document.getElementById('cake-flame');
-    
-    if (cakeFlame.style.display !== 'none') {
-        // Blow out the candle
-        cakeFlame.style.display = 'none';
-        wishMessageEl.textContent = birthdayMessages[wishIndex];
-        
-        wishIndex = (wishIndex + 1) % birthdayMessages.length;
-        
-        createCelebrationEffect();
-        
-        // Reset flame after 3 seconds
+        // Show final celebration
         setTimeout(() => {
-            cakeFlame.style.display = 'block';
-        }, 3000);
+            showFinalCelebration();
+        }, 1000);
     }
 }
 
-function setupVoiceButton() {
-    const voiceBtn = document.getElementById('voice-btn');
-    const voiceMessage = document.getElementById('voice-message');
-    let nameIndex = 0;
-    
-    voiceBtn.addEventListener('click', function(e) {
-        // Prevent default navigation if the href is '#'
-        // e.preventDefault(); 
-        
-        const name = loveNames[nameIndex];
-        voiceMessage.textContent = `Message played for ${name}! (Check the new tab/download)`;
-        
-        nameIndex = (nameIndex + 1) % loveNames.length;
-        
-        createCelebrationEffect();
-    });
-}
-
-// --- ANIMATION HELPER FUNCTIONS ---
-
+// Setup Animations
 function setupAnimations() {
+    // Create heart tunnel
     createHeartTunnel();
+    
+    // Create constellation
     createConstellation();
-    startFallingHearts(); 
-    startFallingButterflies(); 
-    startFallingSparkles(); 
-    startFloatingBalloons(); 
-    startFloatingClouds(); 
-    startShiningParticles(); 
-    startFloatingLoveNotes(); 
-    startFloatingHeartBubbles(); 
-    startFireflies(); 
+    
+    // Start various animations
+    startFallingHearts();
+    startFallingButterflies();
+    startFallingSparkles();
+    startFloatingBalloons();
+    startFloatingClouds();
+    startShiningParticles();
+    startFloatingLoveNotes();
+    startFloatingHeartBubbles();
+    startFireflies();
     startWhisperMessages();
 }
 
@@ -424,29 +358,35 @@ function createConstellation() {
     const starCount = 100;
     const connections = [];
     
+    // Create stars
     for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.className = 'star';
         
+        // Random position
         const x = Math.random() * 100;
         const y = Math.random() * 100;
         
         star.style.left = `${x}vw`;
         star.style.top = `${y}vh`;
         
+        // Random size
         const size = Math.random() * 3 + 1;
         star.style.width = `${size}px`;
         star.style.height = `${size}px`;
         
+        // Random brightness
         const brightness = Math.random() * 0.5 + 0.5;
         star.style.opacity = brightness;
         
+        // Store position for connections
         connections.push({x, y});
         
         constellation.appendChild(star);
     }
     
-    // Create connections (simplified)
+    // Create connections to form "Arooj" (simplified)
+    // This is a simplified version - in a real app you'd create proper constellation
     for (let i = 0; i < connections.length - 1; i += 5) {
         const start = connections[i];
         const end = connections[i + 1];
@@ -456,6 +396,7 @@ function createConstellation() {
             const dy = end.y - start.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
             
+            // Only connect nearby stars
             if (distance < 20) {
                 const connection = document.createElement('div');
                 connection.className = 'star-connection';
@@ -471,6 +412,81 @@ function createConstellation() {
     }
 }
 
+// Falling Hearts
+function startFallingHearts() {
+    setInterval(() => {
+        createFallingElement('❤️', '#ff4081', 1.5);
+    }, 300);
+}
+
+// Falling Butterflies
+function startFallingButterflies() {
+    setInterval(() => {
+        createFallingElement('🦋', '#ba68c8', 2);
+    }, 500);
+}
+
+// Falling Sparkles
+function startFallingSparkles() {
+    setInterval(() => {
+        createFallingElement('✨', '#ffeb3b', 1);
+    }, 200);
+}
+
+// Floating Balloons
+function startFloatingBalloons() {
+    const colors = ['#ff4081', '#ba68c8', '#2196f3', '#4caf50', '#ff9800'];
+    
+    setInterval(() => {
+        createBalloon(colors[Math.floor(Math.random() * colors.length)]);
+    }, 3000);
+}
+
+// Floating Clouds
+function startFloatingClouds() {
+    setInterval(() => {
+        createCloud();
+    }, 5000);
+}
+
+// Shining Particles
+function startShiningParticles() {
+    setInterval(() => {
+        createShiningParticle();
+    }, 100);
+}
+
+// Floating Love Notes
+function startFloatingLoveNotes() {
+    const notes = ['💌', '📝', '💖', '💕'];
+    
+    setInterval(() => {
+        createLoveNote(notes[Math.floor(Math.random() * notes.length)]);
+    }, 4000);
+}
+
+// Floating Heart Bubbles
+function startFloatingHeartBubbles() {
+    setInterval(() => {
+        createHeartBubble();
+    }, 2000);
+}
+
+// Fireflies
+function startFireflies() {
+    setInterval(() => {
+        createFirefly();
+    }, 1500);
+}
+
+// Whisper Messages
+function startWhisperMessages() {
+    setInterval(() => {
+        createWhisperMessage();
+    }, 8000);
+}
+
+// Helper functions for creating animation elements
 function createFallingElement(symbol, color, sizeMultiplier) {
     const element = document.createElement('div');
     element.className = 'falling';
@@ -493,24 +509,6 @@ function createFallingElement(symbol, color, sizeMultiplier) {
     }, duration * 1000);
 }
 
-function startFallingHearts() {
-    setInterval(() => {
-        createFallingElement('❤️', '#ff4081', 1.5);
-    }, 300);
-}
-
-function startFallingButterflies() {
-    setInterval(() => {
-        createFallingElement('🦋', '#ba68c8', 2);
-    }, 500);
-}
-
-function startFallingSparkles() {
-    setInterval(() => {
-        createFallingElement('✨', '#ffeb3b', 1);
-    }, 200);
-}
-
 function createBalloon(color) {
     const balloon = document.createElement('div');
     balloon.className = 'balloon';
@@ -527,14 +525,6 @@ function createBalloon(color) {
             balloon.parentNode.removeChild(balloon);
         }
     }, duration * 1000);
-}
-
-function startFloatingBalloons() {
-    const colors = ['#ff4081', '#ba68c8', '#2196f3', '#4caf50', '#ff9800'];
-    
-    setInterval(() => {
-        createBalloon(colors[Math.floor(Math.random() * colors.length)]);
-    }, 3000);
 }
 
 function createCloud() {
@@ -554,12 +544,6 @@ function createCloud() {
     }, duration * 1000);
 }
 
-function startFloatingClouds() {
-    setInterval(() => {
-        createCloud();
-    }, 5000);
-}
-
 function createShiningParticle() {
     const particle = document.createElement('div');
     particle.className = 'shining-particle';
@@ -573,12 +557,6 @@ function createShiningParticle() {
             particle.parentNode.removeChild(particle);
         }
     }, 2000);
-}
-
-function startShiningParticles() {
-    setInterval(() => {
-        createShiningParticle();
-    }, 100);
 }
 
 function createLoveNote(symbol) {
@@ -599,14 +577,6 @@ function createLoveNote(symbol) {
     }, duration * 1000);
 }
 
-function startFloatingLoveNotes() {
-    const notes = ['💌', '📝', '💖', '💕'];
-    
-    setInterval(() => {
-        createLoveNote(notes[Math.floor(Math.random() * notes.length)]);
-    }, 4000);
-}
-
 function createHeartBubble() {
     const bubble = document.createElement('div');
     bubble.className = 'heart-bubble';
@@ -623,12 +593,6 @@ function createHeartBubble() {
             bubble.parentNode.removeChild(bubble);
         }
     }, duration * 1000);
-}
-
-function startFloatingHeartBubbles() {
-    setInterval(() => {
-        createHeartBubble();
-    }, 2000);
 }
 
 function createFirefly() {
@@ -649,12 +613,6 @@ function createFirefly() {
     }, duration * 1000);
 }
 
-function startFireflies() {
-    setInterval(() => {
-        createFirefly();
-    }, 1500);
-}
-
 function createWhisperMessage() {
     const message = document.createElement('div');
     message.className = 'whisper-message';
@@ -670,38 +628,118 @@ function createWhisperMessage() {
     }, 8000);
 }
 
-function startWhisperMessages() {
-    setInterval(() => {
-        createWhisperMessage();
-    }, 8000);
+// Setup Gift Box
+function setupGiftBox() {
+    const giftBox = document.getElementById('gift-box');
+    const giftMessage = document.getElementById('gift-message');
+    
+    giftBox.addEventListener('click', function() {
+        if (!giftBox.classList.contains('open')) {
+            giftBox.classList.add('open');
+            giftMessage.textContent = "🎁 You've unlocked a special birthday surprise!";
+            
+            // Create celebration effect
+            createCelebrationEffect();
+        }
+    });
 }
 
-function createTapEffect(event) {
-    const tapX = event.clientX;
-    const tapY = event.clientY;
+// Setup Voice Button
+function setupVoiceButton() {
+    const voiceBtn = document.getElementById('voice-btn');
+    const voiceMessage = document.getElementById('voice-message');
+    let nameIndex = 0;
     
+    voiceBtn.addEventListener('click', function() {
+        const name = loveNames[nameIndex];
+        voiceMessage.textContent = `Happy Birthday ${name}!`;
+        
+        // Cycle to next name
+        nameIndex = (nameIndex + 1) % loveNames.length;
+        
+        // Create audio simulation (in a real app, you'd play actual audio)
+        simulateAudioPlay();
+        
+        // Create celebration effect
+        createCelebrationEffect();
+    });
+}
+
+// Simulate audio play
+function simulateAudioPlay() {
+    const voiceBtn = document.getElementById('voice-btn');
+    voiceBtn.innerHTML = '<i class="fas fa-volume-up"></i> Playing...';
+    voiceBtn.style.background = 'linear-gradient(135deg, #4caf50, #2e7d32)';
+    
+    setTimeout(() => {
+        voiceBtn.innerHTML = '<i class="fas fa-play-circle"></i> Play Another Message';
+        voiceBtn.style.background = 'linear-gradient(135deg, var(--primary), var(--primary-dark))';
+    }, 2000);
+}
+
+// Make a Wish - needs to be global because of inline onclick in HTML
+function makeWish() {
+    const wishMessage = document.getElementById('wish-message');
+    const cakeFlame = document.getElementById('cake-flame');
+    
+    if (cakeFlame.style.display !== 'none') {
+        // Blow out the candle
+        cakeFlame.style.display = 'none';
+        wishMessage.textContent = birthdayMessages[wishIndex];
+        
+        // Cycle to next message
+        wishIndex = (wishIndex + 1) % birthdayMessages.length;
+        
+        // Create celebration effect
+        createCelebrationEffect();
+        
+        // Reset flame after 3 seconds
+        setTimeout(() => {
+            cakeFlame.style.display = 'block';
+        }, 3000);
+    }
+}
+
+// Create Tap Effect
+function createTapEffect(event) {
+    const container = document.getElementById('animations-container');
+    const tapX = event.clientX || event.touches[0].clientX;
+    const tapY = event.clientY || event.touches[0].clientY;
+    
+    // Create ripple effect
     const ripple = document.createElement('div');
-    ripple.className = 'tap-ripple';
-    ripple.style.left = `${tapX}px`;
-    ripple.style.top = `${tapY}px`;
+    ripple.style.position = 'fixed';
+    ripple.style.left = `${tapX - 25}px`;
+    ripple.style.top = `${tapY - 25}px`;
+    ripple.style.width = '50px';
+    ripple.style.height = '50px';
+    ripple.style.borderRadius = '50%';
+    ripple.style.background = 'radial-gradient(circle, rgba(255,64,129,0.7) 0%, rgba(255,64,129,0) 70%)';
+    ripple.style.zIndex = '1000';
+    ripple.style.pointerEvents = 'none';
     
     document.body.appendChild(ripple);
-
-    // Animate
-    setTimeout(() => {
-        ripple.style.width = '150px';
-        ripple.style.height = '150px';
-        ripple.style.opacity = '0';
-    }, 10);
     
-    // Clean up
-    setTimeout(() => {
-        if (ripple.parentNode) {
-            ripple.parentNode.removeChild(ripple);
+    // Animate ripple
+    let size = 50;
+    const grow = setInterval(() => {
+        size += 10;
+        ripple.style.width = `${size}px`;
+        ripple.style.height = `${size}px`;
+        ripple.style.left = `${tapX - size/2}px`;
+        ripple.style.top = `${tapY - size/2}px`;
+        ripple.style.opacity = `${1 - size/200}`;
+        
+        if (size > 200) {
+            clearInterval(grow);
+            if (ripple.parentNode) {
+                ripple.parentNode.removeChild(ripple);
+            }
         }
-    }, 400);
+    }, 20);
 }
 
+// Create Celebration Effect
 function createCelebrationEffect() {
     for (let i = 0; i < 30; i++) {
         setTimeout(() => {
@@ -710,7 +748,9 @@ function createCelebrationEffect() {
     }
 }
 
+// Show Final Celebration
 function showFinalCelebration() {
+    // Create massive celebration
     for (let i = 0; i < 100; i++) {
         setTimeout(() => {
             const symbols = ['🎉', '🎊', '🎈', '❤️', '✨'];
@@ -722,41 +762,63 @@ function showFinalCelebration() {
         }, i * 100);
     }
     
+    // Show final message
     const unlockMessage = document.getElementById('unlock-message');
-    unlockMessage.textContent = "🎂 Happy Birthday, Arooj! You
-
-
-    // --- 1. Wish Button Fix ---
-function setupWishButton() {
-    const wishBtn = document.getElementById('wish-btn');
-    const handleWish = (e) => { 
-        if (e.type === 'touchend') e.preventDefault(); // CRITICAL: Stop ghost clicks
-        makeWish(); 
-    };
-    
-    wishBtn.addEventListener('click', handleWish);
-    wishBtn.addEventListener('touchstart', (e) => { e.preventDefault(); makeWish(); });
-    // Add touchend listener to prevent subsequent click events on mobile
-    wishBtn.addEventListener('touchend', handleWish); 
+    unlockMessage.textContent = "🎂 Happy Birthday, Arooj! You've unlocked all your birthday gifts!";
+    unlockMessage.style.fontSize = '1.3rem';
+    unlockMessage.style.color = 'var(--primary)';
+    unlockMessage.style.fontWeight = '700';
 }
 
-// --- 2. Gift Box Fix ---
-function setupGiftBox() {
-    const giftBox = document.getElementById('gift-box');
-    const giftMessage = document.getElementById('gift-message');
+// Setup Sparkle Trail
+function setupSparkleTrail() {
+    let trail = [];
+    const maxTrailLength = 20;
     
-    const openGift = (e) => {
-        if (e.type === 'touchend') e.preventDefault(); // CRITICAL: Stop ghost clicks
-        
-        if (!giftBox.classList.contains('open')) {
-            // ... (rest of the openGift logic) ...
-            giftBox.removeEventListener('click', openGift); 
-            giftBox.removeEventListener('touchend', openGift);
+    document.addEventListener('mousemove', function(e) {
+        createSparkle(e.clientX, e.clientY);
+    });
+    
+    document.addEventListener('touchmove', function(e) {
+        if (e.touches.length > 0) {
+            createSparkle(e.touches[0].clientX, e.touches[0].clientY);
         }
-    };
+    });
     
-    giftBox.addEventListener('click', openGift);
-    giftBox.addEventListener('touchstart', (e) => { e.preventDefault(); openGift(e); });
-    // Add touchend listener to prevent subsequent click events on mobile
-    giftBox.addEventListener('touchend', openGift);
+    function createSparkle(x, y) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle-trail';
+        sparkle.style.left = `${x}px`;
+        sparkle.style.top = `${y}px`;
+        
+        // Random size
+        const size = Math.random() * 15 + 10;
+        sparkle.style.width = `${size}px`;
+        sparkle.style.height = `${size}px`;
+        
+        document.body.appendChild(sparkle);
+        
+        // Add to trail
+        trail.push(sparkle);
+        
+        // Limit trail length
+        if (trail.length > maxTrailLength) {
+            const oldSparkle = trail.shift();
+            if (oldSparkle.parentNode) {
+                oldSparkle.parentNode.removeChild(oldSparkle);
+            }
+        }
+        
+        // Fade out sparkles
+        setTimeout(() => {
+            if (sparkle.parentNode) {
+                sparkle.parentNode.removeChild(sparkle);
+                // Remove from trail
+                const index = trail.indexOf(sparkle);
+                if (index > -1) {
+                    trail.splice(index, 1);
+                }
+            }
+        }, 1000);
+    }
 }
