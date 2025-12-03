@@ -607,7 +607,27 @@ body {
     border-radius: 15px;
     border: 2px solid var(--primary-light);
 }
+/* In style.css */
 
+/* TAPPING GAME AREA */
+.tap-area {
+    /* ... existing styles ... */
+    touch-action: none !important; 
+    /* This overrides all scrolling/panning gestures inside the tap-area */
+}
+
+/* WISH BUTTON & VOICE BUTTON */
+.wish-btn, .voice-btn {
+    /* ... existing styles ... */
+    touch-action: none !important; 
+    /* This ensures your tap doesn't turn into a scroll attempt */
+}
+
+/* GIFT BOX */
+.gift-box {
+    /* ... existing styles ... */
+    touch-action: none !important;
+}
 /* Footer */
 .footer {
     text-align: center;
