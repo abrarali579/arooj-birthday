@@ -1,0 +1,89 @@
+:root {
+    --primary: #9c27b0;
+    --primary-light: #ba68c8;
+    --primary-dark: #7b1fa2;
+    --secondary: #ff4081;
+    --secondary-light: #ff79b0;
+    --secondary-dark: #c60055;
+    --accent: #ff9800;
+    --light: #f3e5f5;
+    --dark: #4a148c;
+    --text: #333;
+    --text-light: #666;
+    --glass: rgba(255, 255, 255, 0.2);
+    --glass-dark: rgba(0, 0, 0, 0.2);
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* CRITICAL MOBILE FIX: Prevents the default 300ms delay and highlight on touch */
+    -webkit-tap-highlight-color: transparent; 
+    touch-action: manipulation; /* Improves touch responsiveness */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text);
+    background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 50%, #ce93d8 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Mobile-First Container */
+.container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 10;
+}
+
+/* ... (All your existing CSS styles from the original code follow here) ... */
+
+/* Optimization for animations - hint to the browser */
+.animations-container, .heart-tunnel, .constellation {
+    will-change: transform, opacity;
+}
+
+/* CRITICAL: Ensure the tap area is responsive and fast */
+.tap-area {
+    /* ... existing styles ... */
+    -webkit-user-select: none; /* iOS */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+    user-select: none; /* Standard */
+    touch-action: manipulation; /* Ensure no strange browser actions on tap */
+}
+
+/* CRITICAL: Remove the :active transform effect for faster touch interaction. 
+   We will handle the visual feedback in JavaScript for better control. */
+/* .tap-area:active {
+    transform: scale(0.95);
+} */
+
+/* Voice Button is now an <a> tag */
+.voice-btn {
+    /* ... existing styles ... */
+    text-decoration: none; /* Remove underline for link */
+    line-height: 1; /* Fix vertical alignment */
+}
+
+/* ... (Place all remaining CSS from your original <style> block here) ... */
+
+/* Hide elements until unlocked */
+.locked {
+    opacity: 0.3;
+    pointer-events: none;
+    filter: blur(2px);
+    /* Optimization: will-change helps smooth the transition */
+    will-change: opacity, filter; 
+}
