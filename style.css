@@ -965,3 +965,15 @@ body {
 .flame {
     width: 20px;
     height: 40px;
+
+
+/* In style.css */
+
+.tap-area {
+    /* ... existing styles ... */
+    
+    /* CRITICAL FIX: Forces the browser to hand off ALL touch handling to JS */
+    touch-action: none; 
+    
+    /* ... rest of the styles ... */
+}
