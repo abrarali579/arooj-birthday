@@ -98,7 +98,29 @@ Happy birthday, my love. May this year bring you all the happiness you deserve a
 Forever yours,
 Abrar`;
 
+// In script.js
 
+function setupVoiceButton() {
+    const voiceBtn = document.getElementById('voice-btn');
+    const voiceMessage = document.getElementById('voice-message');
+    let nameIndex = 0;
+    
+    // Use 'click' here because the anchor tag must complete its default action (navigation)
+    voiceBtn.addEventListener('click', function() {
+        // This logic handles the changing message text for fun.
+        const name = loveNames[nameIndex];
+        voiceMessage.textContent = `Message played for ${name}! (Check the new tab/download)`;
+        
+        nameIndex = (nameIndex + 1) % loveNames.length;
+        
+        createCelebrationEffect();
+    });
+    
+    // CRITICAL: Block all default touch actions on the anchor tag to prevent scroll interference.
+    voiceBtn.addEventListener('touchstart', (e) => {
+        e.stopPropagation(); // Stop the event from bubbling up the DOM
+    });
+}
 // ...
     // Use touchstart for mobile speed
     tapArea.addEventListener('touchstart', (e) => {
