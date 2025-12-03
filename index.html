@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#b71c1c">
+    <title>Happy Birthday Arooj! 💖</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* === CSS VARIABLES === */
+        :root {
+            --primary: #b71c1c;
+            --secondary: #fdd835;
+            --accent: #d81b60;
+            --light: #fff8e1;
+            --dark: #3e2723;
+            --glass: rgba(255, 255, 255, 0.9);
+            --shadow: 0 8px 32px rgba(183, 28, 28, 0.15);
+        }
+
+        /* === RESET & BASE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fffde7 0%, #fff9c4 50%, #f8bbd0 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* === BACKGROUND ELEMENTS === */
+        .bg-heart, .bg-star, .bg-gift {
+            position: fixed;
+            font-size: 24px;
+            color: var(--accent);
+            opacity: 0.2;
+            animation: float 6s infinite ease-in-out;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-heart:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .bg-heart:nth-child(2) { top: 20%; right: 10%; animation-delay: 1s; }
+        .bg-star:nth-child(3) { top: 60%; left: 10%; animation-delay: 2s; }
+        .bg-star:nth-child(4) { top: 40%; right: 5%; animation-delay: 3s; }
+        .bg-gift:nth-child(5) { top: 80%; right: 15%; animation-delay: 4s; }
+
+        /* === CONTAINER & SECTIONS === */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        /* === HERO SECTION === */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            border: 5px solid var(--light);
+            box-shadow: var(--shadow);
+            animation: pulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-img::before {
+            content: "A💖";
+            font-size: 80px;
+            color: white;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .main-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .message-box {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 30px auto;
+            max-width: 600px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(183, 28, 28, 0.2);
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        /* === BUTTONS === */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .btn {
+            padding: 16px 30px;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            min-height: 56px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            box-shadow: 0 4px 15px rgba(183, 28, 28, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, var(--secondary), #ffcc80);
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(253, 216, 53, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* === GIFTS SECTION === */
+        #gifts {
+            background: rgba(255, 253, 231, 0.5);
+            border-radius: 30px;
+            margin: 20px auto;
+            padding: 40px 20px;
+        }
+
+        .section-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .gifts-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .gifts-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .gift-card {
+            background: var(--glass);
+            border-radius: 15px;
+            padding: 25px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gift-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(183, 28, 28, 0.15);
+        }
+
+        .gift-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .gift-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .gift-status {
+            font-size: 0.9rem;
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .gift-card.locked .gift-icon {
+            filter: grayscale(1);
+            opacity: 0.5;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 2px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        /* === GAMES SECTION === */
+        #games {
+            padding-top: 30px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            max-width: 600px;
+            margin: 30px auto;
+        }
+
+        @media (min-width: 768px) {
+            .games-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .game-btn {
+            background: var(--glass);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 20px 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 60px;
+        }
+
+        .game-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .game-btn:hover i {
+            color: white;
+        }
+
+        .game-btn i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* === MODALS === */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            animation: fadeIn 0.5s ease-out;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(183, 28, 28, 0.1);
+            transform: rotate(90deg);
+        }
+
+        /* === LETTER MODAL === */
+        .letter-content {
+            padding: 20px;
+            background: #fffaf0;
+            border-radius: 10px;
+            border: 1px solid rgba(183, 28, 28, 0.1);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 30px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        /* === TOUCH MODAL === */
+        .touch-content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .heart-animation {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        .nickname {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        .wish {
+            font-size: 1.2rem;
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+
+        .urdu-wish {
+            font-family: 'Poppins', sans-serif;
+            color: var(--accent);
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+        /* === DETAILS MODAL === */
+        .gift-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .gift-item {
+            padding: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .gift-item.locked {
+            opacity: 0.6;
+        }
+
+        .item-info h4 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .unlock-btn {
+            padding: 8px 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .unlock-btn:hover {
+            background: var(--accent);
+            transform: scale(1.05);
+        }
+
+        /* === GAME MODAL === */
+        .game-modal-content {
+            max-width: 600px;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-around;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .game-area {
+            width: 100%;
+            height: 300px;
+            background: var(--light);
+            border: 3px dashed var(--accent);
+            border-radius: 10px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-message {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin: 20px 0;
+            font-weight: 600;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        /* === GAME ELEMENTS === */
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            color: var(--accent);
+            cursor: pointer;
+            animation: float 3s infinite ease-in-out;
+            z-index: 2;
+        }
+
+        .balloon {
+            position: absolute;
+            font-size: 2rem;
+            color: var(--primary);
+            cursor: pointer;
+            animation: float 5s linear infinite;
+            bottom: -30px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .card {
+            height: 80px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+
+        .card-front {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+        }
+
+        .card-back {
+            background: var(--secondary);
+            color: var(--dark);
+            transform: rotateY(180deg);
+        }
+
+        /* === FOOTER === */
+        footer {
+            background: linear-gradient(to right, var(--primary), #7f0000);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-heart {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin: 20px 0;
+            animation: heartbeat 2s infinite;
+        }
+
+        .countdown {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.8rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .message-box {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 14px 25px;
+                font-size: 0.95rem;
+            }
+            
+            .modal-content {
+                padding: 25px 20px;
+            }
+            
+            .game-area {
+                height: 250px;
+            }
+            
+            .card-grid {
+                gap: 8px;
+                padding: 15px;
+            }
+            
+            .card {
+                height: 70px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2.2rem;
+            }
+            
+            .profile-img {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .profile-img::before {
+                font-size: 60px;
+            }
+            
+            .gift-card {
+                padding: 20px 15px;
+            }
+            
+            .game-btn {
+                padding: 18px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .btn-group {
+                max-width: 100%;
+            }
+        }
+
+        /* === SCROLL DOWN === */
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--primary);
+            font-size: 2rem;
+            animation: float 2s infinite ease-in-out;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* === CONFETTI === */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            animation: confetti 3s linear forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Elements -->
+    <i class="fas fa-heart bg-heart"></i>
+    <i class="fas fa-heart bg-heart"></i>
+    <i class="fas fa-star bg-star"></i>
+    <i class="fas fa-star bg-star"></i>
+    <i class="fas fa-gift bg-gift"></i>
+
+    <!-- Confetti Container -->
+    <div id="confettiContainer" class="confetti-container"></div>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="profile-img"></div>
+            <h1 class="main-title">Happy Birthday Arooj!</h1>
+            <h2 class="subtitle">My Love, My Life, My Everything</h2>
+            
+            <div class="message-box">
+                <p>To the woman who makes my world complete. Today is all about celebrating the amazing person you are.</p>
+                <p style="color: var(--accent); margin-top: 10px; font-style: italic;">
+                    دنیا کی سب سے پیاری لڑکی کے لیے، جس کے آنے سے میری زندگی میں رنگ بھر گئے ہیں۔
+                </p>
+            </div>
+
+            <div class="btn-group">
+                <button id="openLetterBtn" class="btn btn-primary">
+                    <i class="fas fa-envelope-open-text"></i> Open My Love Letter
+                </button>
+                <button id="touchMeBtn" class="btn btn-secondary">
+                    <i class="fas fa-hand-pointer"></i> Touch Me For A Surprise 😋
+                </button>
+            </div>
+
+            <button class="scroll-down" onclick="scrollToSection('gifts')">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </section>
+
+        <!-- Gifts Section -->
+        <section id="gifts">
+            <h2 class="section-title">Your Birthday Treasures</h2>
+            <p style="text-align: center; margin-bottom: 30px; color: var(--dark);">
+                Some are unlocked, others are waiting for you to play!
+            </p>
+            
+            <div class="gifts-grid" id="giftsGrid">
+                <!-- Gift cards will be generated here -->
+            </div>
+        </section>
+
+        <!-- Games Section -->
+        <section id="games">
+            <h2 class="section-title">Unlock Your Next Surprise!</h2>
+            <p style="text-align: center; margin-bottom: 30px; color: var(--dark);">
+                Choose a category and play a fun game to reveal your next gift.
+            </p>
+            
+            <div class="games-grid">
+                <button class="game-btn" data-gift="songs">
+                    <i class="fas fa-music"></i> Unlock a Song
+                </button>
+                <button class="game-btn" data-gift="reasons">
+                    <i class="fas fa-heart"></i> See Why I Love You
+                </button>
+                <button class="game-btn" data-gift="memories">
+                    <i class="fas fa-camera"></i> View a Memory
+                </button>
+                <button class="game-btn" data-gift="future">
+                    <i class="fas fa-crystal-ball"></i> See Our Future
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p style="font-size: 1.2rem;">Created with infinite love and devotion</p>
+        <div class="footer-heart">💖</div>
+        <p style="font-family: 'Dancing Script', cursive; font-size: 2rem;">Your Abrar</p>
+        <p style="margin-top: 10px; font-size: 1.1rem;">تیرا ابرار 💝</p>
+        <p class="countdown">See you in February 2026, my love</p>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Love Letter Modal -->
+    <div id="letterModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('letterModal')">&times;</span>
+            <h2 style="color: var(--primary); font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin-bottom: 20px;">
+                My Heart's Song
+            </h2>
+            <div class="letter-content">
+                <p>My Dearest Arooj,</p>
+                <br>
+                <p>On this special day, I want to remind you how incredibly precious you are to me. Every moment with you feels like a beautiful dream I never want to wake up from. You are my strength, my joy, and my greatest adventure.</p>
+                <br>
+                <p style="color: var(--accent); font-weight: 600;">
+                    میری پیاری عروج، تم میری زندگی کا سب سے حسین تحفہ ہو۔ تمہاری مسکراہٹ میری دنیا روشن کرتی ہے۔
+                </p>
+                <br>
+                <p>Happy Birthday, my love. I promise to make this year and every year after, filled with endless love and laughter.</p>
+                <div class="signature">
+                    Forever yours,<br>
+                    Abrar 💖
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Touch Me Modal -->
+    <div id="touchModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('touchModal')">&times;</span>
+            <div class="touch-content">
+                <div class="heart-animation">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="nickname" id="nicknameReveal">...</div>
+                <div class="wish" id="wishReveal">...</div>
+                <div class="urdu-wish" id="urduWishReveal">...</div>
+                <button class="btn btn-primary" style="margin-top: 30px;" onclick="triggerTouchInteraction()">
+                    <i class="fas fa-redo"></i> One More Time!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gift Details Modal -->
+    <div id="detailsModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('detailsModal')">&times;</span>
+            <h2 id="detailsModalTitle" style="color: var(--primary); font-family: 'Dancing Script', cursive; font-size: 2.2rem; margin-bottom: 10px;">
+                Gift Details
+            </h2>
+            <p id="detailsModalSubtitle" style="color: var(--accent); margin-bottom: 20px;"></p>
+            <ul class="gift-list" id="detailsModalList">
+                <!-- Gift items will be generated here -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Game Modal -->
+    <div id="gameModal" class="modal-overlay">
+        <div class="modal-content game-modal-content">
+            <span class="close-modal" onclick="closeModal('gameModal')">&times;</span>
+            <h2 id="gameModalTitle" style="color: var(--primary); font-family: 'Dancing Script', cursive; font-size: 2.2rem; margin-bottom: 20px;">
+                Game Title
+            </h2>
+            
+            <div class="game-header">
+                <span id="gameTimer">Time: 0s</span>
+                <span id="gameScore">Score: 0</span>
+                <span id="gameGoal">Goal: 0</span>
+            </div>
+            
+            <div id="gameArea" class="game-area">
+                <!-- Game content will be generated here -->
+            </div>
+            
+            <div class="game-message" id="gameMessage">Ready to play?</div>
+            
+            <div class="game-controls">
+                <button id="startGameBtn" class="btn btn-primary">
+                    <i class="fas fa-play"></i> Start Game
+                </button>
+                <button id="nextGameBtn" class="btn btn-secondary" style="display: none;">
+                    <i class="fas fa-redo"></i> Try Again
+                </button>
+                <button id="continueBtn" class="btn btn-primary" style="display: none;">
+                    <i class="fas fa-gift"></i> Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== DATA =====
+        const giftData = {
+            songs: [
+                {title: "Melody of Your Smile 😊", desc: "Our first song that defined our beginning."},
+                {title: "My Jind's Anthem 🎶", desc: "The song I play when I need my dose of happiness."},
+                {title: "Lifi's Lullaby 😴", desc: "For those late-night drives and quiet moments."},
+                {title: "The Hotto's Beat 💃", desc: "The one we danced to non-stop."},
+                {title: "Symphony of the Future 🚀", desc: "A song about our dreams."},
+                {title: "The Begam's Choice 👸", desc: "Your favorite on repeat."},
+                {title: "Rainy Day Rhythm 🌧️", desc: "The perfect soundtrack for a chai date."},
+                {title: "My Safe Place Song 🏡", desc: "It always reminds me of home with you."},
+                {title: "Arooj's Serenade 🌹", desc: "It feels like it was written just for you."},
+                {title: "Midnight Melody 🌙", desc: "For whispered secrets and stolen kisses."},
+                {title: "The Happy Song 😁", desc: "Because you make me the happiest man."},
+                {title: "Our Forever Tune 💍", desc: "The one we'll have at our wedding."},
+            ],
+            reasons: [
+                {title: "Your Killer Smile 😄", text: "It brightens my darkest days."},
+                {title: "Your Kind Heart 💖", text: "The way you care for everyone is inspiring."},
+                {title: "Your Sense of Humor 😂", text: "You always make me laugh, even when I'm grumpy."},
+                {title: "Your Intelligence 🧠", text: "I love talking to you about everything."},
+                {title: "Your Patience 😇", text: "The endless patience you show me."},
+                {title: "Your Style 💅", text: "You always look effortlessly beautiful."},
+                {title: "Your Voice 🗣️", text: "The sweetest sound I know."},
+                {title: "Your Touch ✨", text: "It instantly calms my soul."},
+                {title: "Your Loyalty 🤞", text: "I know you'll always have my back."},
+                {title: "Your Cooking 😋", text: "I'll never get tired of your food."},
+                {title: "Your Passion 🔥", text: "The energy you put into everything you do."},
+                {title: "Simply Being You 👑", text: "Because you are my Arooj, and that's enough."},
+            ],
+            memories: [
+                {caption: "Our first coffee date and those endless talks. ☕"},
+                {caption: "The day we got caught in the rain but didn't care. 🌧️"},
+                {caption: "The trip where we saw the sunset together. 🌅"},
+                {caption: "That time we accidentally wore matching outfits. 👯"},
+                {caption: "The moment I knew I wanted to spend my life with you. 💍"},
+                {caption: "Our home movie night with way too much popcorn. 🍿"},
+                {caption: "Our first birthday celebration together. 🎂"},
+                {caption: "The day we adopted our first plant/pet (future memory). 🌿"},
+                {caption: "That perfect Eid/Festival moment with family. 🌙"},
+                {caption: "The day we learned to make your favorite dish. 🍲"},
+                {caption: "A walk we took where we shared our biggest secrets. 🤫"},
+                {caption: "The spontaneous trip that was pure magic. 💫"},
+            ],
+            future: [
+                {caption: "The view from our balcony in our new home. 🏡"},
+                {caption: "Watching our kids play in the garden. 👨‍👩‍👧‍👦"},
+                {caption: "Celebrating our 25th anniversary on a cruise. 🛳️"},
+                {caption: "Learning a new hobby together, like pottery. 🏺"},
+                {caption: "Travelling the world, one beautiful city at a time. 🌍"},
+                {caption: "Growing old together, still holding hands. 👵👴"},
+                {caption: "Your big achievement/promotion celebration! 🎉"},
+                {caption: "A cozy winter evening by the fireplace. 🔥"},
+                {caption: "Our annual trip back to our favorite spot. 🏞️"},
+                {caption: "A photo of us having chai together, still laughing. ☕"},
+                {caption: "Watching the sun rise on a perfect morning. ☀️"},
+                {caption: "The moment we finally fulfill that one big shared dream. 🌟"},
+            ]
+        };
+
+        const nicknames = ["My Wyfo", "My Jind", "My Baggo", "My Kuggi", "My Begam", "My Jaan", "My Hotto", "My Lifi"];
+        const birthdayWishes = [
+            "May your day be as sunny as your smile...",
+            "I'm so excited to celebrate another year of you...",
+            "Happy birthday to the woman who stole my heart...",
+            "Every day with you is a gift, but today is extra special...",
+            "You are my everything, today and always...",
+            "Wishing you a birthday that's just as wonderful as you are!",
+            "To my favorite person in the world...",
+            "My life got brighter the moment you walked into it...",
+            "May all your birthday wishes come true...",
+            "Celebrating the amazing woman you are today!",
+            "I love you more than words can say...",
+            "Here's to another year of laughing together..."
+        ];
+        
+        const urduWishes = [
+            "تمہاری سالگرہ پر ڈھیر ساری خوشیاں اور پیار۔",
+            "میری دعا ہے کہ تم ہمیشہ مسکراتی رہو۔",
+            "تم میری زندگی کی سب سے خوبصورت حقیقت ہو۔",
+            "آج کا دن تمہارے لیے بہت خاص ہو، میری جان۔",
+            "تمہارے ہونے سے میری دنیا مکمل ہے۔",
+            "اللہ تمہیں ہمیشہ خوش رکھے اور لمبی عمر دے۔",
+            "میری زندگی میں آنے کا شکریہ، ہیپی برتھ ڈے!",
+            "تمہارے جیسا کوئی نہیں، اور نہ کبھی ہوگا۔",
+            "میری ہر خوشی تم سے جڑی ہے۔",
+            "آج تمہارا دن ہے، خوب انجوائے کرو!",
+            "تم میری رانی ہو، اور آج تمہارا جشن ہے۔",
+            "ہمیشہ ایسے ہی چمکتی رہو میری جان۔"
+        ];
+
+        // ===== STATE MANAGEMENT =====
+        const storageKey = 'aroojBirthday2025';
+        let userProgress = {
+            unlockedSongs: Array(12).fill(false),
+            unlockedReasons: Array(12).fill(false),
+            unlockedMemories: Array(12).fill(false),
+            unlockedFuture: Array(12).fill(false),
+            gamesPlayed: 0
+        };
+
+        let currentGame = {
+            type: null,
+            gameId: 0,
+            timer: 0,
+            score: 0,
+            goal: 0,
+            interval: null,
+            cards: [],
+            flippedCards: [],
+            matchedPairs: 0
+        };
+
+        // ===== INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Website loaded successfully!");
+            
+            // Load saved progress
+            loadProgress();
+            
+            // Ensure first item is unlocked
+            if (!localStorage.getItem(storageKey)) {
+                userProgress.unlockedSongs[0] = true;
+                userProgress.unlockedReasons[0] = true;
+                saveProgress();
+            }
+            
+            // Render initial content
+            renderGiftsGrid();
+            setupEventListeners();
+            
+            // Add visual feedback for buttons
+            setupButtonEffects();
+        });
+
+        function loadProgress() {
+            const saved = localStorage.getItem(storageKey);
+            if (saved) {
+                try {
+                    userProgress = JSON.parse(saved);
+                    console.log("Progress loaded:", userProgress);
+                } catch (e) {
+                    console.error("Error loading progress:", e);
+                }
+            }
+        }
+
+        function saveProgress() {
+            try {
+                localStorage.setItem(storageKey, JSON.stringify(userProgress));
+                console.log("Progress saved");
+            } catch (e) {
+                console.error("Error saving progress:", e);
+            }
+        }
+
+        // ===== EVENT LISTENERS =====
+        function setupEventListeners() {
+            // Letter button
+            document.getElementById('openLetterBtn').addEventListener('click', function() {
+                openModal('letterModal');
+            });
+            
+            // Touch button
+            document.getElementById('touchMeBtn').addEventListener('click', function() {
+                openModal('touchModal');
+                triggerTouchInteraction();
+            });
+            
+            // Game buttons
+            document.querySelectorAll('.game-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const giftType = this.dataset.gift;
+                    selectGame(giftType);
+                });
+            });
+            
+            // Start game button
+            document.getElementById('startGameBtn').addEventListener('click', startGame);
+            
+            // Next game button
+            document.getElementById('nextGameBtn').addEventListener('click', function() {
+                closeModal('gameModal');
+                document.getElementById('games').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Continue button
+            document.getElementById('continueBtn').addEventListener('click', function() {
+                closeModal('gameModal');
+            });
+            
+            // Close modals when clicking outside
+            document.querySelectorAll('.modal-overlay').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeModal(this.id);
+                    }
+                });
+            });
+            
+            // Prevent default on buttons for mobile
+            document.querySelectorAll('.btn, .game-btn').forEach(btn => {
+                btn.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                }, { passive: false });
+            });
+        }
+
+        function setupButtonEffects() {
+            document.querySelectorAll('.btn, .game-btn, .gift-card').forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.95)';
+                });
+                
+                element.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            });
+        }
+
+        // ===== MODAL FUNCTIONS =====
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            
+            // Clear any game intervals
+            if (currentGame.interval) {
+                clearInterval(currentGame.interval);
+                currentGame.interval = null;
+            }
+        }
+
+        // ===== TOUCH ME INTERACTION =====
+        function triggerTouchInteraction() {
+            const randomNick = nicknames[Math.floor(Math.random() * nicknames.length)];
+            const randomWish = birthdayWishes[Math.floor(Math.random() * birthdayWishes.length)];
+            const randomUrdu = urduWishes[Math.floor(Math.random() * urduWishes.length)];
+
+            document.getElementById('nicknameReveal').textContent = randomNick;
+            document.getElementById('wishReveal').textContent = randomWish;
+            document.getElementById('urduWishReveal').textContent = randomUrdu;
+            
+            createConfetti();
+        }
+
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            container.innerHTML = '';
+            
+            const colors = ['#b71c1c', '#fdd835', '#d81b60', '#4CAF50', '#2196F3'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
+                
+                container.appendChild(confetti);
+            }
+            
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 3000);
+        }
+
+        // ===== GIFT MANAGEMENT =====
+        function renderGiftsGrid() {
+            const grid = document.getElementById('giftsGrid');
+            grid.innerHTML = '';
+            
+            const categories = [
+                { type: 'songs', title: '12 Songs For You 🎵', icon: 'fa-music' },
+                { type: 'reasons', title: '12 Reasons I Love You 💖', icon: 'fa-heart' },
+                { type: 'memories', title: '12 Precious Memories 📸', icon: 'fa-camera' },
+                { type: 'future', title: '12 Future Glimpses 🔮', icon: 'fa-crystal-ball' }
+            ];
+            
+            categories.forEach(category => {
+                const unlocked = userProgress['unlocked' + category.type.charAt(0).toUpperCase() + category.type.slice(1)];
+                const unlockedCount = unlocked.filter(Boolean).length;
+                const totalCount = unlocked.length;
+                const progress = (unlockedCount / totalCount) * 100;
+                const isLocked = unlockedCount === 0;
+                
+                const card = document.createElement('div');
+                card.className = `gift-card ${isLocked ? 'locked' : ''}`;
+                card.dataset.type = category.type;
+                card.innerHTML = `
+                    <div class="gift-icon">
+                        <i class="fas ${category.icon}"></i>
+                    </div>
+                    <h3 class="gift-title">${category.title}</h3>
+                    <div class="gift-status">
+                        ${isLocked ? 'Play game to unlock' : `${unlockedCount}/${totalCount} unlocked`}
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => showGiftDetails(category.type));
+                grid.appendChild(card);
+            });
+        }
+
+        function showGiftDetails(type) {
+            const data = giftData[type];
+            const unlocked = userProgress['unlocked' + type.charAt(0).toUpperCase() + type.slice(1)];
+            const unlockedCount = unlocked.filter(Boolean).length;
+            
+            // Update modal title
+            const titles = {
+                songs: 'Songs For You',
+                reasons: 'Reasons I Love You',
+                memories: 'Precious Memories',
+                future: 'Future Glimpses'
+            };
+            
+            document.getElementById('detailsModalTitle').textContent = titles[type];
+            document.getElementById('detailsModalSubtitle').textContent = `Unlocked: ${unlockedCount}/12`;
+            
+            // Populate gift list
+            const list = document.getElementById('detailsModalList');
+            list.innerHTML = '';
+            
+            data.forEach((item, index) => {
+                const isUnlocked = unlocked[index];
+                const li = document.createElement('li');
+                li.className = `gift-item ${isUnlocked ? '' : 'locked'}`;
+                
+                let content = '';
+                if (type === 'songs') {
+                    content = `
+                        <h4>${isUnlocked ? item.title : 'Song ' + (index + 1) + ' Locked'}</h4>
+                        <p>${isUnlocked ? item.desc : 'Play a game to unlock!'}</p>
+                    `;
+                } else if (type === 'reasons') {
+                    content = `
+                        <h4>${isUnlocked ? item.title : 'Reason ' + (index + 1) + ' Locked'}</h4>
+                        <p>${isUnlocked ? item.text : 'Play a game to unlock!'}</p>
+                    `;
+                } else {
+                    content = `
+                        <h4>${isUnlocked ? item.caption : titles[type] + ' ' + (index + 1) + ' Locked'}</h4>
+                    `;
+                }
+                
+                li.innerHTML = `
+                    <div class="item-info">${content}</div>
+                    <div>
+                        ${isUnlocked ? 
+                            '<i class="fas fa-check" style="color: #4CAF50;"></i>' : 
+                            '<button class="unlock-btn" onclick="handleUnlockRequest(\'' + type + '\')">Unlock</button>'
+                        }
+                    </div>
+                `;
+                list.appendChild(li);
+            });
+            
+            openModal('detailsModal');
+        }
+
+        function handleUnlockRequest(type) {
+            closeModal('detailsModal');
+            selectGame(type);
+        }
+
+        // ===== GAME SYSTEM =====
+        function selectGame(giftType) {
+            currentGame.type = giftType;
+            currentGame.gameId = Math.floor(Math.random() * 4) + 1;
+            currentGame.score = 0;
+            currentGame.timer = 20;
+            
+            // Update modal UI
+            const gameTitles = [
+                "Catch My Hearts ❤️",
+                "Pop The Balloons 🎈",
+                "Find The Name 🔍",
+                "Match The Pairs 🧠"
+            ];
+            
+            document.getElementById('gameModalTitle').textContent = gameTitles[currentGame.gameId - 1];
+            
+            // Set goals based on game
+            if (currentGame.gameId === 1 || currentGame.gameId === 2) {
+                currentGame.goal = currentGame.gameId === 1 ? 7 : 10;
+                document.getElementById('gameGoal').textContent = `Goal: ${currentGame.goal}`;
+                document.getElementById('gameTimer').textContent = `Time: ${currentGame.timer}s`;
+            } else {
+                currentGame.goal = currentGame.gameId === 3 ? 1 : 3;
+                document.getElementById('gameGoal').textContent = currentGame.gameId === 3 ? 'Goal: Find Arooj' : `Goal: ${currentGame.goal} pairs`;
+                document.getElementById('gameTimer').textContent = 'Time: Unlimited';
+            }
+            
+            document.getElementById('gameScore').textContent = 'Score: 0';
+            document.getElementById('gameMessage').textContent = 'Ready to play?';
+            document.getElementById('gameArea').innerHTML = '';
+            
+            // Show/hide buttons
+            document.getElementById('startGameBtn').style.display = 'block';
+            document.getElementById('nextGameBtn').style.display = 'none';
+            document.getElementById('continueBtn').style.display = 'none';
+            
+            openModal('gameModal');
+        }
+
+        function startGame() {
+            document.getElementById('startGameBtn').style.display = 'none';
+            document.getElementById('gameMessage').textContent = 'Go!';
+            currentGame.score = 0;
+            
+            const gameArea = document.getElementById('gameArea');
+            gameArea.innerHTML = '';
+            gameArea.style.pointerEvents = 'auto';
+            
+            switch(currentGame.gameId) {
+                case 1:
+                    startHeartsGame(gameArea);
+                    break;
+                case 2:
+                    startBalloonsGame(gameArea);
+                    break;
+                case 3:
+                    startFindNameGame(gameArea);
+                    break;
+                case 4:
+                    startMatchPairsGame(gameArea);
+                    break;
+            }
+            
+            // Start timer for timed games
+            if (currentGame.gameId === 1 || currentGame.gameId === 2) {
+                startTimer();
+            }
+        }
+
+        function startTimer() {
+            if (currentGame.interval) clearInterval(currentGame.interval);
+            
+            currentGame.interval = setInterval(() => {
+                currentGame.timer--;
+                document.getElementById('gameTimer').textContent = `Time: ${currentGame.timer}s`;
+                
+                if (currentGame.timer <= 0) {
+                    endGame(false);
+                }
+            }, 1000);
+        }
+
+        function endGame(success) {
+            if (currentGame.interval) {
+                clearInterval(currentGame.interval);
+                currentGame.interval = null;
+            }
+            
+            const gameArea = document.getElementById('gameArea');
+            gameArea.style.pointerEvents = 'none';
+            
+            if (success) {
+                document.getElementById('gameMessage').textContent = '🎉 Congratulations! You won!';
+                document.getElementById('continueBtn').style.display = 'block';
+                unlockReward();
+                createConfetti();
+            } else {
+                document.getElementById('gameMessage').textContent = '😔 Time\'s up! Try again?';
+                document.getElementById('nextGameBtn').style.display = 'block';
+            }
+        }
+
+        function unlockReward() {
+            const type = currentGame.type;
+            const unlockedArray = userProgress['unlocked' + type.charAt(0).toUpperCase() + type.slice(1)];
+            
+            // Find locked items
+            const lockedIndices = [];
+            unlockedArray.forEach((isUnlocked, index) => {
+                if (!isUnlocked) lockedIndices.push(index);
+            });
+            
+            if (lockedIndices.length === 0) {
+                alert('🎊 You\'ve unlocked everything in this category!');
+                return;
+            }
+            
+            // Randomly unlock one
+            const randomIndex = lockedIndices[Math.floor(Math.random() * lockedIndices.length)];
+            unlockedArray[randomIndex] = true;
+            userProgress.gamesPlayed++;
+            
+            saveProgress();
+            renderGiftsGrid();
+            
+            // Show what was unlocked
+            const item = giftData[type][randomIndex];
+            let message = '';
+            
+            switch(type) {
+                case 'songs':
+                    message = `🎵 Unlocked: ${item.title}`;
+                    break;
+                case 'reasons':
+                    message = `💖 Unlocked: ${item.title}`;
+                    break;
+                case 'memories':
+                    message = `📸 Unlocked: ${item.caption}`;
+                    break;
+                case 'future':
+                    message = `🔮 Unlocked: ${item.caption}`;
+                    break;
+            }
+            
+            document.getElementById('gameMessage').innerHTML = `${message}<br>🎉 Congratulations!`;
+        }
+
+        function updateScore(points) {
+            currentGame.score += points;
+            document.getElementById('gameScore').textContent = `Score: ${currentGame.score}`;
+            
+            if (currentGame.score >= currentGame.goal) {
+                endGame(true);
+            }
+        }
+
+        // ===== GAME 1: CATCH MY HEARTS =====
+        function startHeartsGame(container) {
+            function createHeart() {
+                if (container.children.length > 10) return;
+                
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 90 + '%';
+                heart.style.top = Math.random() * 80 + '%';
+                heart.style.animationDuration = Math.random() * 2 + 1 + 's';
+                
+                heart.addEventListener('click', function() {
+                    updateScore(1);
+                    this.style.opacity = '0';
+                    this.style.transform = 'scale(1.5)';
+                    setTimeout(() => this.remove(), 200);
+                });
+                
+                container.appendChild(heart);
+                
+                setTimeout(() => {
+                    if (heart.parentNode === container) {
+                        heart.remove();
+                    }
+                }, 3000);
+            }
+            
+            // Create initial hearts
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => createHeart(), i * 300);
+            }
+            
+            // Keep creating hearts
+            const heartInterval = setInterval(() => {
+                if (currentGame.score < currentGame.goal) {
+                    createHeart();
+                } else {
+                    clearInterval(heartInterval);
+                }
+            }, 800);
+            
+            currentGame.heartInterval = heartInterval;
+        }
+
+        // ===== GAME 2: POP THE BALLOONS =====
+        function startBalloonsGame(container) {
+            function createBalloon() {
+                if (container.children.length > 8) return;
+                
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.innerHTML = '🎈';
+                balloon.style.left = Math.random() * 90 + '%';
+                balloon.style.animationDuration = Math.random() * 3 + 2 + 's';
+                balloon.style.color = ['#b71c1c', '#fdd835', '#d81b60', '#4CAF50', '#2196F3'][Math.floor(Math.random() * 5)];
+                
+                balloon.addEventListener('click', function() {
+                    updateScore(1);
+                    this.style.opacity = '0';
+                    this.style.transform = 'scale(1.5)';
+                    setTimeout(() => this.remove(), 200);
+                });
+                
+                container.appendChild(balloon);
+            }
+            
+            // Create initial balloons
+            for (let i = 0; i < 4; i++) {
+                setTimeout(() => createBalloon(), i * 400);
+            }
+            
+            // Keep creating balloons
+            const balloonInterval = setInterval(() => {
+                if (currentGame.score < currentGame.goal) {
+                    createBalloon();
+                } else {
+                    clearInterval(balloonInterval);
+                }
+            }, 600);
+            
+            currentGame.balloonInterval = balloonInterval;
+        }
+
+        // ===== GAME 3: FIND THE NAME =====
+        function startFindNameGame(container) {
+            container.classList.add('card-grid');
+            
+            const names = ['Abrar', 'Jind', 'Hotto', 'Wyfo', 'Kuggi', 'Begam', 'Lifi', 'Jaan'];
+            let cards = ['Arooj', ...names.slice(0, 8)];
+            cards = cards.sort(() => Math.random() - 0.5);
+            
+            currentGame.cards = cards;
+            currentGame.flippedCards = [];
+            
+            container.innerHTML = '';
+            cards.forEach((name, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.index = index;
+                card.dataset.name = name;
+                
+                card.innerHTML = `
+                    <div class="card-front">?</div>
+                    <div class="card-back">${name}</div>
+                `;
+                
+                card.addEventListener('click', function() {
+                    if (this.classList.contains('flipped') || currentGame.flippedCards.length > 0) return;
+                    
+                    this.classList.add('flipped');
+                    const name = this.dataset.name;
+                    
+                    if (name === 'Arooj') {
+                        updateScore(1);
+                    } else {
+                        setTimeout(() => {
+                            this.classList.remove('flipped');
+                            document.getElementById('gameMessage').textContent = `Not ${name}! Try again!`;
+                        }, 1000);
+                    }
+                });
+                
+                container.appendChild(card);
+            });
+        }
+
+        // ===== GAME 4: MATCH THE PAIRS =====
+        function startMatchPairsGame(container) {
+            container.classList.add('card-grid');
+            
+            const symbols = ['🌹', '❤️', '💍', '🥂', '💋', '👑'];
+            let cards = [...symbols.slice(0, 6), ...symbols.slice(0, 6)];
+            cards = cards.sort(() => Math.random() - 0.5);
+            
+            currentGame.cards = cards;
+            currentGame.flippedCards = [];
+            currentGame.matchedPairs = 0;
+            
+            container.innerHTML = '';
+            cards.forEach((symbol, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.index = index;
+                card.dataset.symbol = symbol;
+                
+                card.innerHTML = `
+                    <div class="card-front">?</div>
+                    <div class="card-back">${symbol}</div>
+                `;
+                
+                card.addEventListener('click', function() {
+                    if (this.classList.contains('flipped') || currentGame.flippedCards.length >= 2) return;
+                    
+                    this.classList.add('flipped');
+                    currentGame.flippedCards.push(this);
+                    
+                    if (currentGame.flippedCards.length === 2) {
+                        const card1 = currentGame.flippedCards[0];
+                        const card2 = currentGame.flippedCards[1];
+                        
+                        if (card1.dataset.symbol === card2.dataset.symbol) {
+                            // Match found
+                            currentGame.matchedPairs++;
+                            currentGame.flippedCards = [];
+                            
+                            if (currentGame.matchedPairs >= currentGame.goal) {
+                                updateScore(1);
+                            }
+                        } else {
+                            // No match
+                            setTimeout(() => {
+                                card1.classList.remove('flipped');
+                                card2.classList.remove('flipped');
+                                currentGame.flippedCards = [];
+                            }, 1000);
+                        }
+                    }
+                });
+                
+                container.appendChild(card);
+            });
+        }
+
+        // ===== UTILITY FUNCTIONS =====
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // ===== MOBILE SUPPORT =====
+        // Prevent zoom on double tap
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = new Date().getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Fix iOS 100vh issue
+        function setVH() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        setVH();
+        window.addEventListener('resize', setVH);
+        window.addEventListener('orientationchange', setVH);
+
+        // Initialize on load
+        window.addEventListener('load', function() {
+            console.log('Page fully loaded');
+            renderGiftsGrid();
+        });
+
+    </script>
+</body>
+</html>
