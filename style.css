@@ -19,9 +19,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* CRITICAL MOBILE FIX: Prevents the default 300ms delay and highlight on touch */
-    -webkit-tap-highlight-color: transparent; 
-    touch-action: manipulation; /* Improves touch responsiveness */
+    -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -241,21 +239,32 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
-    touch-action: manipulation;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s;
     position: relative;
     overflow: hidden;
 }
 
-/* We handle the active state via JavaScript now for better mobile control, 
-   but keep the CSS state for desktop fallback clarity. */
-.tap-area:active { 
+.tap-area:active {
     transform: scale(0.95);
+}
+
+.tap-area::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 1%, transparent 1%);
+    background-size: 20px 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tap-area:active::before {
+    opacity: 1;
 }
 
 .tap-text {
@@ -537,8 +546,6 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    text-decoration: none;
-    line-height: 1;
 }
 
 .voice-btn:hover {
@@ -607,27 +614,7 @@ body {
     border-radius: 15px;
     border: 2px solid var(--primary-light);
 }
-/* In style.css */
 
-/* TAPPING GAME AREA */
-.tap-area {
-    /* ... existing styles ... */
-    touch-action: none !important; 
-    /* This overrides all scrolling/panning gestures inside the tap-area */
-}
-
-/* WISH BUTTON & VOICE BUTTON */
-.wish-btn, .voice-btn {
-    /* ... existing styles ... */
-    touch-action: none !important; 
-    /* This ensures your tap doesn't turn into a scroll attempt */
-}
-
-/* GIFT BOX */
-.gift-box {
-    /* ... existing styles ... */
-    touch-action: none !important;
-}
 /* Footer */
 .footer {
     text-align: center;
@@ -657,7 +644,6 @@ body {
     pointer-events: none;
     z-index: 1;
     overflow: hidden;
-    will-change: transform, opacity;
 }
 
 /* Falling Animations */
@@ -840,7 +826,6 @@ body {
     z-index: -1;
     perspective: 1000px;
     overflow: hidden;
-    will-change: transform;
 }
 
 .heart-tunnel-container {
@@ -875,7 +860,6 @@ body {
     z-index: 100;
     animation: whisper-float 8s linear forwards;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-    will-change: transform, opacity;
 }
 
 @keyframes whisper-float {
@@ -1010,20 +994,6 @@ body {
     background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
     mix-blend-mode: screen;
     transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 1s, width 1s, height 1s;
-}
-
-.tap-ripple {
-    position: fixed;
-    width: 0px;
-    height: 0px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,64,129,0.7) 0%, rgba(255,64,129,0) 70%);
-    z-index: 1000;
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    transition: all 0.4s ease-out;
 }
 
 /* Responsive Design */
@@ -1123,19 +1093,10 @@ body {
         max-width: 1140px;
     }
 }
-.tap-area {
-    /* ... existing styles ... */
-    
-    /* CRITICAL FIX: Forces the browser to hand off ALL touch handling to JS */
-    touch-action: none !important; /* Use !important just to be ruthless */
-    
-    /* ... rest of the styles ... */
-}
+
 /* Hide elements until unlocked */
 .locked {
     opacity: 0.3;
     pointer-events: none;
     filter: blur(2px);
-    will-change: opacity, filter; 
 }
-
