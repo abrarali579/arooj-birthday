@@ -695,3 +695,39 @@ function showFinalCelebration() {
     
     const unlockMessage = document.getElementById('unlock-message');
     unlockMessage.textContent = "🎂 Happy Birthday, Arooj! You
+
+
+    // --- 1. Wish Button Fix ---
+function setupWishButton() {
+    const wishBtn = document.getElementById('wish-btn');
+    const handleWish = (e) => { 
+        if (e.type === 'touchend') e.preventDefault(); // CRITICAL: Stop ghost clicks
+        makeWish(); 
+    };
+    
+    wishBtn.addEventListener('click', handleWish);
+    wishBtn.addEventListener('touchstart', (e) => { e.preventDefault(); makeWish(); });
+    // Add touchend listener to prevent subsequent click events on mobile
+    wishBtn.addEventListener('touchend', handleWish); 
+}
+
+// --- 2. Gift Box Fix ---
+function setupGiftBox() {
+    const giftBox = document.getElementById('gift-box');
+    const giftMessage = document.getElementById('gift-message');
+    
+    const openGift = (e) => {
+        if (e.type === 'touchend') e.preventDefault(); // CRITICAL: Stop ghost clicks
+        
+        if (!giftBox.classList.contains('open')) {
+            // ... (rest of the openGift logic) ...
+            giftBox.removeEventListener('click', openGift); 
+            giftBox.removeEventListener('touchend', openGift);
+        }
+    };
+    
+    giftBox.addEventListener('click', openGift);
+    giftBox.addEventListener('touchstart', (e) => { e.preventDefault(); openGift(e); });
+    // Add touchend listener to prevent subsequent click events on mobile
+    giftBox.addEventListener('touchend', openGift);
+}
