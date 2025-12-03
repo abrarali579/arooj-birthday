@@ -99,6 +99,13 @@ Forever yours,
 Abrar`;
 
 
+// ...
+    // Use touchstart for mobile speed
+    tapArea.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // MANDATORY: BLOCK BROWSER DEFAULT ACTIONS
+        handleTap(e);
+    });
+// ...
 // --- GAME STATE ---
 let loveMeter = 0;
 let unlockedSections = 0;
