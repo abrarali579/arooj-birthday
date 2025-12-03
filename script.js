@@ -98,6 +98,7 @@ Happy birthday, my love. May this year bring you all the happiness you deserve a
 Forever yours,
 Abrar`;
 
+
 // --- GAME STATE ---
 let loveMeter = 0;
 let unlockedSections = 0;
@@ -108,23 +109,17 @@ const tapsToUnlock = 50; // Taps needed to unlock all content
 
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', function() {
-    // Populate sections
     populateSections();
-    
-    // Start typewriter effect
     startTypewriterEffect();
-    
-    // Setup interactions
     setupGame();
     setupGiftBox();
     setupWishButton();
     setupVoiceButton();
-
-    // Setup visual effects
     setupAnimations();
     setupSparkleTrail();
 });
 
+// --- CORE LOGIC FUNCTIONS ---
 function populateSections() {
     const reasonsGrid = document.getElementById('reasons-grid');
     reasons.forEach((reason, index) => {
@@ -183,6 +178,9 @@ function startTypewriterEffect() {
             typewriterElement.textContent += typewriterText.charAt(charIndex);
             charIndex++;
             setTimeout(typeWriter, 30);
+        } else {
+            // Stop the cursor blink after typing is complete
+            typewriterElement.style.borderRight = 'none';
         }
     }
     
@@ -195,33 +193,27 @@ function setupGame() {
     const loveMeterFill = document.getElementById('love-meter-fill');
     const loveMeterText = document.getElementById('love-meter-text');
 
-    // Use a flag to prevent multiple rapid-fire clicks/taps from registering as separate events
     let isTapping = false;
 
-    // The core tap logic
     const handleTap = (e) => {
         if (isTapping) return;
         isTapping = true;
         
-        // Visual feedback (better than CSS :active for speed)
+        // Visual feedback
         tapArea.style.transform = 'scale(0.95)';
 
         tapCount++;
         loveMeter = Math.min(maxLoveMeter, tapCount * (maxLoveMeter / tapsToUnlock));
         loveMeterFill.style.width = `${loveMeter}%`;
 
-        // Update love meter text (removed verbose checks for conciseness)
         const progress = Math.round(loveMeter);
         loveMeterText.textContent = `Love is ${progress}% complete. Keep Tapping!`;
         
-        // Create visual tap effect
         const eventData = e.touches && e.touches.length > 0 ? e.touches[0] : e;
         createTapEffect(eventData);
         
-        // Check for unlocks
         checkUnlockProgress();
 
-        // Reset the flag after a very short delay to allow re-tapping quickly
         setTimeout(() => {
             isTapping = false;
         }, 50); 
@@ -231,16 +223,16 @@ function setupGame() {
         tapArea.style.transform = 'scale(1)';
     };
 
-    // CRITICAL: Use touchstart for mobile speed, but prevent default action
+    // Use touchstart for mobile speed
     tapArea.addEventListener('touchstart', (e) => {
         e.preventDefault();
         handleTap(e);
     });
 
-    // Handle touchend to reset the visual state
     tapArea.addEventListener('touchend', resetTapVisual);
+    tapArea.addEventListener('touchcancel', resetTapVisual);
 
-    // Keep click for desktop fallback
+    // Click for desktop fallback
     tapArea.addEventListener('click', handleTap);
 }
 
@@ -263,7 +255,6 @@ function checkUnlockProgress() {
         }
     };
 
-    // Check linear unlocks
     sections.forEach((s, index) => {
         if (loveMeter >= s.progress && unlockedSections < index + 1) {
             if (s.id) {
@@ -276,7 +267,7 @@ function checkUnlockProgress() {
                 }
             }
             unlockMessage.textContent = s.message;
-            unlockedSections = index + 1; // Increment based on the loop index
+            unlockedSections = index + 1;
             createCelebrationEffect();
         }
     });
@@ -284,7 +275,6 @@ function checkUnlockProgress() {
     // Final Unlock
     if (loveMeter >= 100 && unlockedSections < sections.length + 1) {
         unlockSection('future-section');
-        // Unlock all remaining songs
         songsGrid.querySelectorAll('.song-card.locked').forEach(card => card.classList.remove('locked'));
         
         unlockMessage.textContent = "🎊 You've unlocked everything! Happy Birthday, my love!";
@@ -305,7 +295,7 @@ function setupGiftBox() {
             giftBox.classList.add('open');
             giftMessage.textContent = "🎁 You've opened a special birthday surprise! (It's my heart, always yours).";
             createCelebrationEffect();
-            giftBox.removeEventListener('click', openGift); // Open once
+            giftBox.removeEventListener('click', openGift); 
         }
     };
     
@@ -328,7 +318,6 @@ function makeWish() {
         cakeFlame.style.display = 'none';
         wishMessageEl.textContent = birthdayMessages[wishIndex];
         
-        // Cycle to next message
         wishIndex = (wishIndex + 1) % birthdayMessages.length;
         
         createCelebrationEffect();
@@ -345,9 +334,10 @@ function setupVoiceButton() {
     const voiceMessage = document.getElementById('voice-message');
     let nameIndex = 0;
     
-    voiceBtn.addEventListener('click', function() {
-        // Since it's an <a> tag with an href, the default behavior handles the "play" part.
-        // This logic handles the changing message text for fun.
+    voiceBtn.addEventListener('click', function(e) {
+        // Prevent default navigation if the href is '#'
+        // e.preventDefault(); 
+        
         const name = loveNames[nameIndex];
         voiceMessage.textContent = `Message played for ${name}! (Check the new tab/download)`;
         
@@ -357,16 +347,9 @@ function setupVoiceButton() {
     });
 }
 
-// --- ANIMATIONS & EFFECTS (Simplified for brevity, originals were lengthy but kept) ---
-// (All your original animation helper functions: createFallingElement, createBalloon, 
-// createCloud, createShiningParticle, createLoveNote, createHeartBubble, 
-// createFirefly, createWhisperMessage, createHeartTunnel, createConstellation, 
-// startFallingHearts, etc., would be placed here, slightly modified for the new file.)
+// --- ANIMATION HELPER FUNCTIONS ---
 
-// Placeholder for animation functions
 function setupAnimations() {
-    // Implement your original setupAnimations logic here
-    // For this demonstration, we'll keep the core effect calls to show the structure
     createHeartTunnel();
     createConstellation();
     startFallingHearts(); 
@@ -381,35 +364,308 @@ function setupAnimations() {
     startWhisperMessages();
 }
 
-function createTapEffect(event) {
-    const tapX = event.clientX || event.touches[0].clientX;
-    const tapY = event.clientY || event.touches[0].clientY;
+// Create Heart Tunnel
+function createHeartTunnel() {
+    const tunnelContainer = document.getElementById('heart-tunnel');
+    const heartCount = 100;
     
-    // Use a simpler, non-interval-based effect for performance
+    for (let i = 0; i < heartCount; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'tunnel-heart';
+        heart.innerHTML = '❤️';
+        
+        // Position hearts in a 3D spiral
+        const angle = (i / heartCount) * Math.PI * 2;
+        const radius = 50 + (i * 2);
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+        const z = i * 10;
+        
+        heart.style.transform = `translate3d(${x}px, ${y}px, ${z}px)`;
+        heart.style.fontSize = `${1 + (i / 20)}rem`;
+        heart.style.opacity = `${0.1 + (i / heartCount) * 0.6}`;
+        
+        tunnelContainer.appendChild(heart);
+    }
+}
+
+// Create Constellation
+function createConstellation() {
+    const constellation = document.getElementById('constellation');
+    const starCount = 100;
+    const connections = [];
+    
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        star.style.left = `${x}vw`;
+        star.style.top = `${y}vh`;
+        
+        const size = Math.random() * 3 + 1;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        
+        const brightness = Math.random() * 0.5 + 0.5;
+        star.style.opacity = brightness;
+        
+        connections.push({x, y});
+        
+        constellation.appendChild(star);
+    }
+    
+    // Create connections (simplified)
+    for (let i = 0; i < connections.length - 1; i += 5) {
+        const start = connections[i];
+        const end = connections[i + 1];
+        
+        if (end) {
+            const dx = end.x - start.x;
+            const dy = end.y - start.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 20) {
+                const connection = document.createElement('div');
+                connection.className = 'star-connection';
+                
+                connection.style.left = `${start.x}vw`;
+                connection.style.top = `${start.y}vh`;
+                connection.style.width = `${distance}vw`;
+                connection.style.transform = `rotate(${Math.atan2(dy, dx) * 180 / Math.PI}deg)`;
+                
+                constellation.appendChild(connection);
+            }
+        }
+    }
+}
+
+function createFallingElement(symbol, color, sizeMultiplier) {
+    const element = document.createElement('div');
+    element.className = 'falling';
+    element.innerHTML = symbol;
+    
+    const left = Math.random() * 100;
+    element.style.left = `${left}vw`;
+    element.style.color = color;
+    element.style.fontSize = `${1.5 * sizeMultiplier}rem`;
+    
+    const duration = Math.random() * 5 + 5;
+    element.style.animationDuration = `${duration}s`;
+    
+    document.getElementById('animations-container').appendChild(element);
+    
+    setTimeout(() => {
+        if (element.parentNode) {
+            element.parentNode.removeChild(element);
+        }
+    }, duration * 1000);
+}
+
+function startFallingHearts() {
+    setInterval(() => {
+        createFallingElement('❤️', '#ff4081', 1.5);
+    }, 300);
+}
+
+function startFallingButterflies() {
+    setInterval(() => {
+        createFallingElement('🦋', '#ba68c8', 2);
+    }, 500);
+}
+
+function startFallingSparkles() {
+    setInterval(() => {
+        createFallingElement('✨', '#ffeb3b', 1);
+    }, 200);
+}
+
+function createBalloon(color) {
+    const balloon = document.createElement('div');
+    balloon.className = 'balloon';
+    balloon.style.background = color;
+    balloon.style.left = `${Math.random() * 100}vw`;
+    
+    const duration = Math.random() * 10 + 20;
+    balloon.style.animationDuration = `${duration}s`;
+    
+    document.getElementById('animations-container').appendChild(balloon);
+    
+    setTimeout(() => {
+        if (balloon.parentNode) {
+            balloon.parentNode.removeChild(balloon);
+        }
+    }, duration * 1000);
+}
+
+function startFloatingBalloons() {
+    const colors = ['#ff4081', '#ba68c8', '#2196f3', '#4caf50', '#ff9800'];
+    
+    setInterval(() => {
+        createBalloon(colors[Math.floor(Math.random() * colors.length)]);
+    }, 3000);
+}
+
+function createCloud() {
+    const cloud = document.createElement('div');
+    cloud.className = 'cloud';
+    cloud.style.top = `${Math.random() * 50 + 10}vh`;
+    
+    const duration = Math.random() * 20 + 30;
+    cloud.style.animationDuration = `${duration}s`;
+    
+    document.getElementById('animations-container').appendChild(cloud);
+    
+    setTimeout(() => {
+        if (cloud.parentNode) {
+            cloud.parentNode.removeChild(cloud);
+        }
+    }, duration * 1000);
+}
+
+function startFloatingClouds() {
+    setInterval(() => {
+        createCloud();
+    }, 5000);
+}
+
+function createShiningParticle() {
+    const particle = document.createElement('div');
+    particle.className = 'shining-particle';
+    particle.style.left = `${Math.random() * 100}vw`;
+    particle.style.top = `${Math.random() * 100}vh`;
+    
+    document.getElementById('animations-container').appendChild(particle);
+    
+    setTimeout(() => {
+        if (particle.parentNode) {
+            particle.parentNode.removeChild(particle);
+        }
+    }, 2000);
+}
+
+function startShiningParticles() {
+    setInterval(() => {
+        createShiningParticle();
+    }, 100);
+}
+
+function createLoveNote(symbol) {
+    const note = document.createElement('div');
+    note.className = 'love-note';
+    note.innerHTML = symbol;
+    note.style.left = `${Math.random() * 100}vw`;
+    
+    const duration = Math.random() * 15 + 25;
+    note.style.animationDuration = `${duration}s`;
+    
+    document.getElementById('animations-container').appendChild(note);
+    
+    setTimeout(() => {
+        if (note.parentNode) {
+            note.parentNode.removeChild(note);
+        }
+    }, duration * 1000);
+}
+
+function startFloatingLoveNotes() {
+    const notes = ['💌', '📝', '💖', '💕'];
+    
+    setInterval(() => {
+        createLoveNote(notes[Math.floor(Math.random() * notes.length)]);
+    }, 4000);
+}
+
+function createHeartBubble() {
+    const bubble = document.createElement('div');
+    bubble.className = 'heart-bubble';
+    bubble.innerHTML = '❤️';
+    bubble.style.left = `${Math.random() * 100}vw`;
+    
+    const duration = Math.random() * 10 + 15;
+    bubble.style.animationDuration = `${duration}s`;
+    
+    document.getElementById('animations-container').appendChild(bubble);
+    
+    setTimeout(() => {
+        if (bubble.parentNode) {
+            bubble.parentNode.removeChild(bubble);
+        }
+    }, duration * 1000);
+}
+
+function startFloatingHeartBubbles() {
+    setInterval(() => {
+        createHeartBubble();
+    }, 2000);
+}
+
+function createFirefly() {
+    const firefly = document.createElement('div');
+    firefly.className = 'firefly';
+    firefly.style.left = `${Math.random() * 100}vw`;
+    firefly.style.top = `${Math.random() * 100}vh`;
+    
+    const duration = Math.random() * 10 + 15;
+    firefly.style.animationDuration = `${duration}s`;
+    
+    document.getElementById('animations-container').appendChild(firefly);
+    
+    setTimeout(() => {
+        if (firefly.parentNode) {
+            firefly.parentNode.removeChild(firefly);
+        }
+    }, duration * 1000);
+}
+
+function startFireflies() {
+    setInterval(() => {
+        createFirefly();
+    }, 1500);
+}
+
+function createWhisperMessage() {
+    const message = document.createElement('div');
+    message.className = 'whisper-message';
+    message.textContent = whisperMessages[Math.floor(Math.random() * whisperMessages.length)];
+    message.style.left = `${Math.random() * 70 + 15}vw`;
+    
+    document.body.appendChild(message);
+    
+    setTimeout(() => {
+        if (message.parentNode) {
+            message.parentNode.removeChild(message);
+        }
+    }, 8000);
+}
+
+function startWhisperMessages() {
+    setInterval(() => {
+        createWhisperMessage();
+    }, 8000);
+}
+
+function createTapEffect(event) {
+    const tapX = event.clientX;
+    const tapY = event.clientY;
+    
     const ripple = document.createElement('div');
     ripple.className = 'tap-ripple';
-    ripple.style.position = 'fixed';
     ripple.style.left = `${tapX}px`;
     ripple.style.top = `${tapY}px`;
-    ripple.style.background = 'radial-gradient(circle, rgba(255,64,129,0.7) 0%, rgba(255,64,129,0) 70%)';
-    ripple.style.zIndex = '1000';
-    ripple.style.pointerEvents = 'none';
-    ripple.style.width = '0px';
-    ripple.style.height = '0px';
-    ripple.style.borderRadius = '50%';
-    ripple.style.transform = 'translate(-50%, -50%)';
-    ripple.style.transition = 'all 0.4s ease-out';
-
+    
     document.body.appendChild(ripple);
 
-    // Force reflow to start transition from size 0
-    void ripple.offsetWidth; 
-
     // Animate
-    ripple.style.width = '150px';
-    ripple.style.height = '150px';
-    ripple.style.opacity = '0';
+    setTimeout(() => {
+        ripple.style.width = '150px';
+        ripple.style.height = '150px';
+        ripple.style.opacity = '0';
+    }, 10);
     
+    // Clean up
     setTimeout(() => {
         if (ripple.parentNode) {
             ripple.parentNode.removeChild(ripple);
@@ -420,23 +676,22 @@ function createTapEffect(event) {
 function createCelebrationEffect() {
     for (let i = 0; i < 30; i++) {
         setTimeout(() => {
-            // Your original falling sparkle/heart function here
-            // createFallingElement('✨', '#ffeb3b', 1); 
+            createFallingElement('✨', '#ffeb3b', 1);
         }, i * 50);
     }
 }
 
 function showFinalCelebration() {
-    // Your original showFinalCelebration logic here
+    for (let i = 0; i < 100; i++) {
+        setTimeout(() => {
+            const symbols = ['🎉', '🎊', '🎈', '❤️', '✨'];
+            const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+            const colors = ['#ff4081', '#ba68c8', '#2196f3', '#4caf50', '#ff9800'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            createFallingElement(symbol, color, 2);
+        }, i * 100);
+    }
+    
     const unlockMessage = document.getElementById('unlock-message');
-    unlockMessage.textContent = "🎂 Happy Birthday, Arooj! You've unlocked all your birthday gifts!";
-    // ... rest of the styling logic
-}
-
-function setupSparkleTrail() {
-    // Your original sparkle trail logic here, using 'touchmove' for mobile.
-}
-
-// NOTE: All the other missing animation functions (createHeartTunnel, createConstellation, 
-// createFallingElement, startFallingHearts, etc.) must be copied from your original 
-// code and pasted into this script.js file.
+    unlockMessage.textContent = "🎂 Happy Birthday, Arooj! You
