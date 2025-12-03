@@ -965,15 +965,157 @@ body {
 .flame {
     width: 20px;
     height: 40px;
+    background: #ff9800;
+    border-radius: 50% 50% 20% 20%;
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: flame-flicker 0.5s infinite alternate;
+}
 
+@keyframes flame-flicker {
+    0% { transform: translateX(-50%) scale(1); }
+    100% { transform: translateX(-50%) scale(1.1); }
+}
 
-/* In style.css */
+/* Sparkle Trail */
+.sparkle-trail {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1000;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+    mix-blend-mode: screen;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 1s, width 1s, height 1s;
+}
 
+.tap-ripple {
+    position: fixed;
+    width: 0px;
+    height: 0px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,64,129,0.7) 0%, rgba(255,64,129,0) 70%);
+    z-index: 1000;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: all 0.4s ease-out;
+}
+
+/* Responsive Design */
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+    
+    .neon-name {
+        font-size: 3.5rem;
+    }
+    
+    .birthday-title {
+        font-size: 2.8rem;
+    }
+    
+    .photo-container {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .reasons-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+    
+    .neon-name {
+        font-size: 4rem;
+    }
+    
+    .birthday-title {
+        font-size: 3.2rem;
+    }
+    
+    .photo-container {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .tap-area {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .gift-box {
+        width: 220px;
+        height: 220px;
+    }
+    
+    .songs-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+    
+    .neon-name {
+        font-size: 4.5rem;
+    }
+    
+    .birthday-title {
+        font-size: 3.5rem;
+    }
+    
+    .photo-container {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .reasons-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .songs-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
 .tap-area {
     /* ... existing styles ... */
     
     /* CRITICAL FIX: Forces the browser to hand off ALL touch handling to JS */
-    touch-action: none; 
+    touch-action: none !important; /* Use !important just to be ruthless */
     
     /* ... rest of the styles ... */
 }
+/* Hide elements until unlocked */
+.locked {
+    opacity: 0.3;
+    pointer-events: none;
+    filter: blur(2px);
+    will-change: opacity, filter; 
+}
+
